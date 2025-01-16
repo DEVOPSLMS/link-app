@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="search">
+        <div class="container">
+            <div class="card-left">
+                <div class="header-text">
+                    <h1>Your Linkages</h1>
+                </div>
+                <div class="card-information">
+                    <div class="card-text">
+                        <p>Lorem placeholder iadadk akdaksd</p>
+                        
+                    </div>
+                    <div class="tag-list">
+
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>  
+                        <a href=""><button class="see"><span class="material-symbols-outlined">
+                            arrow_forward
+                            </span></button></a>
+                    </div>
+                    
+                    
+                </div>
+               
+                <hr>
+                <div class="card-information">
+                    <div class="card-text">
+                        <p>Lorem placeholder iadadk akdaksd</p>
+                    </div>
+                    <div class="tag-list">
+
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>  
+                        <a href=""><button class="see"><span class="material-symbols-outlined">
+                            arrow_forward
+                            </span></button></a>
+                    </div>
+                    
+                </div>
+                
+                <hr>
+                <div class="card-information">
+                    <div class="card-text">
+                        <p>Lorem placeholder iadadk akdaksd</p>
+                    </div>
+                    <div class="tag-list">
+
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div>
+                        <div class="tags">
+                            <span>Tags</span>
+                            
+                        </div> 
+                        <a href=""><button class="see"><span class="material-symbols-outlined">
+                            arrow_forward
+                            </span></button></a> 
+                    </div>
+                    
+                </div>
+                
+                <hr>
+            </div>
+           
+             
+            <div class="card-right">
+                <div class="header-class">
+                    <h1 >Enter 6 digit code to view <span class="others">Other</span> linkage </h1>
+                </div>
+               
+                <div class="input-list">
+                    <input 
+                    *ngFor="let digit of otpInputs; let i = index" 
+                    type="text" 
+                    maxlength="1" 
+                    [(ngModel)]="otp[i]" 
+                    (input)="moveToNext($event, i)" 
+                    (keydown)="handleKeydown($event, i)" 
+                    class="otp-input" 
+                    autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
