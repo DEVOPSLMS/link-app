@@ -50,4 +50,11 @@
 
   .icons span:hover {
     color: red;
+    cursor: pointer;
+  }
+  .icons span:hover .text-icon{
+    display:block;
+  }
+  .icons .text-icon{
+    display: none;
   }

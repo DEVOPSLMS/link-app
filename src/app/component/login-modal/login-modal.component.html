@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+    <div class="modal" *ngIf="isVisible">
+        <div class="modal-content">
+            <h2 class="login"><a href="">Login</a>  <span class="signup"><a href="">Sign Up</a></span></h2>
+            <p>Log in using your email and password you have registered with.</p>
+            <div class="input-field" >
+                <form action ="" autocomplete="off">
+                    <input type="email"class="input-field-modal"autocomplete="off webauthn"name="new-email" placeholder="Enter Email">
+                    <input type="password"class="input-field-modal"autocomplete="off"placeholder="Enter Password">    
+                </form>
+            </div>
+            <p class="bottom-text"></p>
+            <button (click)="closeModal()">Close</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
