@@ -7,6 +7,9 @@ import { HomeComponent } from './component/home/home.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { LoginModalComponent } from './component/login-modal/login-modal.component';
+import { SignupComponent } from './component/signup/signup.component';
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { LoginModalComponent } from './component/login-modal/login-modal.compone
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    SignupComponent,
+    HomeLayoutComponent,
+    SigninLayoutComponent,
   ],
   imports: [
     BrowserModule,
