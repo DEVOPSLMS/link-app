@@ -13,32 +13,33 @@
         <div class="modal-content">
             <h2 class="login">Login</h2>
             <div class="input-field">
-                <form action="" autocomplete="off">
+                <form action="" [formGroup]="loginForm" autocomplete="off">
                     <div class="email">
                         <span>Email</span>
                         <input type="email" class="input-field-modal" autocomplete="off webauthn" name="new-email"
-                            placeholder="Enter Email">
+                        formControlName="email" placeholder="Enter Email">
                     </div>
                     <div class="password">
                         <span>Password</span>
-                        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
-                            class="input-field-modal" autocomplete="off webauthn" placeholder="Enter Password">
+                        <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                            class="input-field-modal"(keyup.enter)="login()" autocomplete="off webauthn" placeholder="Enter Password">
                         <button (click)="togglePasswordVisibility()" class="toggle-button">
                             <span class="material-symbols-outlined">
                                 {{ showPassword ? 'visibility_off' : 'visibility' }}
                             </span>
                         </button>
                     </div>
+                    <p class="bottom-text"></p>
+                    <button class="login-button" (click)="login()">Log In</button>
+                    <a class="forget">Forgot Password?</a>
+                    <div class="signup">
+                        <p>Don't have an account? <span><a href="/register">Sign Up Here</a></span></p>
+                    </div>
                 </form>
 
             </div>
-            <p class="bottom-text"></p>
-            <button class="login-button">Log In</button>
-            <a class="forget">Forgot Password?</a>
-            <div class="signup">
-                <p>Don't have an account? <span><a href="/register">Sign Up Here</a></span></p>
-            </div>
-           
+
+
         </div>
     </div>
 
