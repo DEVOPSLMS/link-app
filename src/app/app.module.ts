@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
@@ -10,6 +10,9 @@ import { LoginModalComponent } from './component/login-modal/login-modal.compone
 import { SignupComponent } from './component/signup/signup.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.component';
+import { AuthService } from './service/auth.service';
+import { provideHttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,12 @@ import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.com
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+
+  providers: [AuthService,provideHttpClient(),CookieService],
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
