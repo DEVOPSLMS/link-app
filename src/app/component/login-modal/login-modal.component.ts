@@ -42,7 +42,7 @@ export class LoginModalComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next:(response)=>{
           this.closeModal();
-         
+          this.loginForm.reset();
         },
         error:(error)=>{
           console.log(error);

@@ -19,10 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isVisible = false;
   private authSubscription: Subscription | null = null;
 
-  constructor(
-    private cookieService: CookieService,
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authSubscription = this.authService.refreshToken$.subscribe(token => {
@@ -33,21 +30,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (savedToken) this.refresh_token = savedToken;
     
   }
-
-
-
   signOut() {
     this.authService.logout();
     this.isCardVisible=false;
   }
-
-
-
   showCard() {
     this.isCardVisible = true;
     
   }
-
   openLoginModal() {
     this.isVisible = true;
   }
