@@ -13,6 +13,9 @@ import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.com
 import { AuthService } from './service/auth.service';
 import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
+import { EmailVerifiedComponent } from './component/email-verified/email-verified.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { CookieService } from 'ngx-cookie-service';
     SignupComponent,
     HomeLayoutComponent,
     SigninLayoutComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent,
+    EmailVerifiedComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +40,7 @@ import { CookieService } from 'ngx-cookie-service';
 
   providers: [AuthService,provideHttpClient(),CookieService],
   bootstrap: [AppComponent],
+  
   
 })
 export class AppModule { }
