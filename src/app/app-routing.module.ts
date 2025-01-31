@@ -6,7 +6,7 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
-import { EmailVerifiedComponent } from './component/email-verified/email-verified.component';
+
 
 const routes: Routes = [
   {
@@ -42,10 +42,7 @@ const routes: Routes = [
         path: 'verify-email',
         component: VerifyEmailComponent 
       },
-      {
-        path: 'email-verified/:code/:email',
-        component: EmailVerifiedComponent 
-      },
+      
     ]
   }
 
