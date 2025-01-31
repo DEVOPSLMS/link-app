@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../service/auth.service';
-import { OutSideClickDirective } from '../../directive/outside-click.directive';
+
 
 @Component({
   selector: 'app-navbar',

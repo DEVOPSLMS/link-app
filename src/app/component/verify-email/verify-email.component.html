@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Email</title>
 </head>
+
 <body>
     <div class="container">
-        <p>A email has been sent to your account. Verify email to continue</p>
+        <form action="" [formGroup]="verify_email">
+            <p>A code has been sent to your email</p>
+            <input type="text" placeholder="6 Digit Code" name="code" formControlName="code"nmaxlength="6"pattern="\d*"autocomplete="off webauthn"required>
+            <button (click)="verifyEmail()">Verify Email Now</button>
+        </form>
+
     </div>
 </body>
+
 </html>

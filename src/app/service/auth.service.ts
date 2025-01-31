@@ -12,6 +12,8 @@ export class AuthService {
   private apiUrl = "https://localhost:7174/api";
   private refreshTokenSubject = new BehaviorSubject<string>('');
   refreshToken$ = this.refreshTokenSubject.asObservable();
+  private email = new BehaviorSubject<string>(''); // Default value
+  currentEmail = this.email.asObservable();
   constructor(private cookieService: CookieService,private router: Router) { }
 
   login(credentials: { email: string; password: string }): Observable<any> {
@@ -21,6 +23,7 @@ export class AuthService {
        
         if (error.status === 500 && error.error.message == 'Email is not verified') {
           errorMessage = 'Email not verified';
+          sessionStorage.setItem("email",credentials.email);
           this.router.navigateByUrl('verify-email');
         } else if (error.status === 500 && error.error.message === "Invalid email or password") {
           // Use a code from the API response for precise handling
@@ -37,7 +40,7 @@ export class AuthService {
         
         localStorage.setItem('token', response.accessToken);
         this.refreshTokenSubject.next(response.refreshToken);
-        this.cookieService.set('refreshTokenExpiry',response.refreshTokenExpiryTime ,{
+        this.cookieService.set('refresh_token',response.refreshToken ,{
           expires: new Date(response.refreshTokenExpiryTime), // Convert expiryTime to Date object
           path: '/', // Makes the cookie available across the site
           secure: true, // Ensures it's only sent over HTTPS
@@ -46,8 +49,9 @@ export class AuthService {
       })
     )
   }
+
   verifyEmail(code:string,email:string){
-    return this.http.post(this.apiUrl+'/Email-Verification',{code,email}).pipe(
+    return this.http.post(this.apiUrl+'/Email-Verification',{email,code}).pipe(
       catchError((error:HttpErrorResponse)=>{
         let errorMessage = 'An unknown error occurred.';
        
@@ -65,10 +69,10 @@ export class AuthService {
         }));
       }),
       tap((response: any) => {
-        console.log(response);
+        
         localStorage.setItem('token', response.accessToken);
         this.refreshTokenSubject.next(response.refreshToken);
-        this.cookieService.set('refreshTokenExpiry',response.refreshTokenExpiryTime ,{
+        this.cookieService.set('refresh_token',response.refreshToken ,{
           expires: new Date(response.refreshTokenExpiryTime), // Convert expiryTime to Date object
           path: '/', // Makes the cookie available across the site
           secure: true, // Ensures it's only sent over HTTPS
