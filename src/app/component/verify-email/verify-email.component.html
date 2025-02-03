@@ -10,9 +10,15 @@
 <body>
     <div class="container">
         <form action="" [formGroup]="verify_email">
-            <p>A code has been sent to your email</p>
-            <input type="text" placeholder="6 Digit Code" name="code" formControlName="code"nmaxlength="6"pattern="\d*"autocomplete="off webauthn"required>
-            <button (click)="verifyEmail()">Verify Email Now</button>
+            <p>A code has been sent to your email. </p>
+            <span>Please enter the 6-digit code we sent to {{maskedEmail}}</span>
+            <input type="number" [(ngModel)]="inputValue" name="code" inputmode="numeric"pattern="[a-zA-Z ]*"formControlName="code"autocomplete="off webauthn"required (input)="enforceMaxLength($event)" max="999999" min="0">
+            <span class="errormessage">{{errorMessage}}</span>
+            <br>
+            <button class="verify" (click)="verifyEmail()"[disabled]="isLoading"><span *ngIf="!isLoading">Verify Email</span><div *ngIf="isLoading" class="spinner"></div></button>
+     
+            <button class="resend" (click)="resendEmail()"[disabled]="isLoadingResend"><span *ngIf="!isLoadingResend">Resend Code</span><div *ngIf="isLoadingResend" class="spinner"></div></button>
+            <span class="sendmessage">{{sendMessage}}</span>
         </form>
 
     </div>
