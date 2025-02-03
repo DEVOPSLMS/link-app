@@ -16,12 +16,14 @@ export class LoginModalComponent {
   constructor(private authService:AuthService,private fb:FormBuilder,private cdr:ChangeDetectorRef,private router:Router){
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required]]
     });
   }
   isVisible = false;
   password: string = '';
   showPassword: boolean = false;
+  isLoading = false;
+  errorMessage:string='';
 
   @Output() closed = new EventEmitter<void>();
   togglePasswordVisibility() {
@@ -39,13 +41,23 @@ export class LoginModalComponent {
   }
   login(){
     if(this.loginForm.valid){
+      this.isLoading = true;
       this.authService.login(this.loginForm.value).subscribe({
         next:(response)=>{
-          this.closeModal();
-          this.loginForm.reset();
+          setTimeout(() => {
+            this.isLoading = false;
+            this.closeModal();
+            this.loginForm.reset();
+            this.errorMessage='';
+          }, 2000);
         },
         error:(error)=>{
           console.log(error);
+         
+          setTimeout(() => {
+            this.isLoading = false;
+            this.errorMessage=error.message;
+          }, 2000);
         }
       })
     }

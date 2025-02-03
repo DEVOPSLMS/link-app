@@ -8,3 +8,76 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+span{
+  margin-top:3rem;
+}
+.container{
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.158);
+  box-sizing: border-box;
+  width: 27rem;
+  margin-top:10rem;
+  margin-left:39%;
+  border-radius: 0.5rem ;
+  -webkit-border-radius: 0.5rem ;
+  -moz-border-radius: 0.5rem ;
+  -ms-border-radius: 0.5rem ;
+  -o-border-radius: 0.5rem ;
+  padding:1rem;
+}
+input{
+  margin-top:2rem;
+  width: 25rem;
+  height:2.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+  background-color: #cccccc;
+  border: none;
+}
+input:focus{
+ outline:none;
+}
+.verify{
+  width:25rem;
+  margin-top: 2rem;
+  background-color: blueviolet;
+  border:1px solid blueviolet;
+}
+.resend{
+  margin-top: 1rem;
+  width:25rem;
+
+}
+.spinner {
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.sendmessage{
+  color:green;
+  margin-top: 0.2rem;
+
+  font-size: 1rem;
+  margin-left:8rem;
+}
+.errormessage{
+  color:red;
+  margin-top: 0.2rem;
+
+  font-size: 1rem;
+  margin-left:8rem;
+}

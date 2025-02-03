@@ -24,7 +24,10 @@ export class AuthService {
         if (error.status === 500 && error.error.message == 'Email is not verified') {
           errorMessage = 'Email not verified';
           sessionStorage.setItem("email",credentials.email);
-          this.router.navigateByUrl('verify-email');
+          setTimeout(()=>{
+            this.router.navigateByUrl('verify-email');
+          },2000)
+         
         } else if (error.status === 500 && error.error.message === "Invalid email or password") {
           // Use a code from the API response for precise handling
           errorMessage = "Invalid email or password.";
@@ -37,24 +40,24 @@ export class AuthService {
         
       }),
       tap((response: any) => {
-        
         localStorage.setItem('token', response.accessToken);
-        this.refreshTokenSubject.next(response.refreshToken);
         this.cookieService.set('refresh_token',response.refreshToken ,{
           expires: new Date(response.refreshTokenExpiryTime), // Convert expiryTime to Date object
           path: '/', // Makes the cookie available across the site
           secure: true, // Ensures it's only sent over HTTPS
           sameSite: 'Strict' // Prevents CSRF attacks
         });
+        setTimeout(()=>{
+          this.refreshTokenSubject.next(response.refreshToken);
+        },2000);
       })
     )
   }
 
-  verifyEmail(code:string,email:string){
+  verifyEmail(email:string,code:string){
     return this.http.post(this.apiUrl+'/Email-Verification',{email,code}).pipe(
       catchError((error:HttpErrorResponse)=>{
         let errorMessage = 'An unknown error occurred.';
-       
         if (error.status === 500 && error.error.message == "Email or code doesn't exist") {
           errorMessage = 'Invalid credentials';
           this.router.navigateByUrl('verify-email');
@@ -91,8 +94,29 @@ export class AuthService {
   }
   logout() {
     this.cookieService.delete('refresh_token');
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('token');
     this.refreshTokenSubject.next('');
 
+  }
+  resendEmail(email:string){
+    return this.http.post(this.apiUrl+'/Send-Email',{email}).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        let errorMessage = 'An unknown error occurred.';
+        if (error.status === 500 && error.error.message === "Email doesn't exist") {
+          // Use a code from the API response for precise handling
+          errorMessage = "Error : Email doesn't exist";
+        }
+        
+        return throwError(() => ({
+          code: error.error?.code || '500',
+          message: errorMessage
+        }));
+      }),
+      tap((response: any) => {
+        
+        
+        
+      })
+    )
   }
 }

@@ -14,6 +14,12 @@ export class VerifyEmailComponent implements OnInit{
   verify_email: FormGroup;
   email: string = '';
   verified=false;
+  maskedEmail:string='';
+  inputValue: number | null = null;
+  isLoading = false;
+  isLoadingResend=false;
+  sendMessage:string='';
+  errorMessage:string=''
   constructor(private authService:AuthService,private fb:FormBuilder,private cdr:ChangeDetectorRef,private router:Router){
     this.verify_email = this.fb.group({
       code: ['', [Validators.required]],
@@ -22,17 +28,64 @@ export class VerifyEmailComponent implements OnInit{
   }
   ngOnInit(): void {
     this.email=sessionStorage.getItem("email");
-    
+    this.maskedEmail=this.maskEmail(this.email);
+  
   }
   verifyEmail(){
-
-    this.authService.verifyEmail(this.verify_email.get('code')?.value,this.email).subscribe({
+    this.isLoading=true;
+    this.authService.verifyEmail(this.email,this.verify_email.get('code')?.value).subscribe({
       next:(response:any)=>{
-        this.verified=true;
+
         sessionStorage.removeItem("email");
+        setTimeout(()=>{
+          this.isLoading=false;
+        },2000)
       },
       error:(error:any)=>{
+  
         console.log(error);
+        this.errorMessage=error.message;
+        setTimeout(()=>{
+          this.isLoading=false;
+        },2000)
+      }
+    })
+  }
+  maskEmail(email: string): string {
+    const [localPart, domain] = email.split('@');
+    const maskedLocal = localPart[0] + '*'.repeat(localPart.length - 1);
+    const domainParts = domain.split('.');
+    const maskedDomain = domainParts[0][0] + '*'.repeat(domainParts[0].length - 1);
+    return `${maskedLocal}@${maskedDomain}.${domainParts[1]}`;
+  }
+  enforceMaxLength(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // Restrict input to 6 digits
+    if (value.length > 6) {
+      input.value = value.slice(0, 6);
+      this.inputValue = parseInt(input.value, 10);
+    }
+  }
+
+  resendEmail(){
+    this.isLoadingResend=true;
+    this.authService.resendEmail(this.email).subscribe({
+      next:(response)=>{
+        setTimeout(() => {
+          this.isLoadingResend = false;
+          this.sendMessage="Code has been sent";
+          console.log(this.isLoadingResend)
+        }, 2000);
+      },
+      error:(error)=>{
+        
+        setTimeout(() => {
+          this.isLoadingResend = false;
+          
+          console.log(this.isLoadingResend)
+        }, 2000);
       }
     })
   }

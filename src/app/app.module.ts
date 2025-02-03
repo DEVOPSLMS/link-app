@@ -15,6 +15,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
+import { CollectionComponent } from './component/collection/collection.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { VerifyEmailComponent } from './component/verify-email/verify-email.comp
     SigninLayoutComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
+    CollectionComponent,
     
   ],
   imports: [

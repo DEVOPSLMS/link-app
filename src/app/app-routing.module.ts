@@ -6,6 +6,7 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
+import { CollectionComponent } from './component/collection/collection.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
+      },
+      {
+        path: 'collection',
+        component: CollectionComponent 
       },
 
     ]
