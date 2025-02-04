@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
@@ -14,10 +15,24 @@ export class AuthService {
   refreshToken$ = this.refreshTokenSubject.asObservable();
   private email = new BehaviorSubject<string>(''); // Default value
   currentEmail = this.email.asObservable();
+  private accessToken: string | null = null;
+  private accessTokenSubject = new BehaviorSubject<string | null>(null);
+  accessToken$ = this.accessTokenSubject.asObservable();
   constructor(private cookieService: CookieService,private router: Router) { }
+  setAccessToken(token: string): void {
+    this.accessTokenSubject.next(token);
+  }
+  getAccessToken(): string | null {
+    return this.accessTokenSubject.value;
+  }
+  clearAccessToken(): void {
+    this.accessTokenSubject.next(null);
+  }
 
   login(credentials: { email: string; password: string }): Observable<any> {
+
     return this.http.post(this.apiUrl + '/login', credentials, { withCredentials: true }).pipe(
+      
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unknown error occurred.';
        
@@ -40,15 +55,13 @@ export class AuthService {
         
       }),
       tap((response: any) => {
-        localStorage.setItem('token', response.accessToken);
-        this.cookieService.set('refresh_token',response.refreshToken ,{
-          expires: new Date(response.refreshTokenExpiryTime), // Convert expiryTime to Date object
-          path: '/', // Makes the cookie available across the site
-          secure: true, // Ensures it's only sent over HTTPS
-          sameSite: 'Strict' // Prevents CSRF attacks
-        });
+        console.log(response)
+        this.setAccessToken(response.accessToken);
+        console.log(this.accessTokenSubject.value)
+        this.cookieService.set('refresh_token','true' );
         setTimeout(()=>{
-          this.refreshTokenSubject.next(response.refreshToken);
+          
+          this.refreshTokenSubject.next('true');
         },2000);
       })
     )
@@ -73,14 +86,9 @@ export class AuthService {
       }),
       tap((response: any) => {
         
-        localStorage.setItem('token', response.accessToken);
-        this.refreshTokenSubject.next(response.refreshToken);
-        this.cookieService.set('refresh_token',response.refreshToken ,{
-          expires: new Date(response.refreshTokenExpiryTime), // Convert expiryTime to Date object
-          path: '/', // Makes the cookie available across the site
-          secure: true, // Ensures it's only sent over HTTPS
-          sameSite: 'Strict' // Prevents CSRF attacks
-        });
+        this.setAccessToken(response.accessToken);
+        this.refreshTokenSubject.next('true');
+        this.cookieService.set('refresh_token','true' );
         setTimeout(()=>{
           this.router.navigateByUrl('/home');
         },2000);
@@ -94,9 +102,9 @@ export class AuthService {
   }
   logout() {
     this.cookieService.delete('refresh_token');
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.refreshTokenSubject.next('');
-
+    this.router.navigateByUrl("home");
   }
   resendEmail(email:string){
     return this.http.post(this.apiUrl+'/Send-Email',{email}).pipe(

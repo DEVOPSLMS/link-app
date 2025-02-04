@@ -11,11 +11,13 @@ import { SignupComponent } from './component/signup/signup.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.component';
 import { AuthService } from './service/auth.service';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 import { CollectionComponent } from './component/collection/collection.component';
+import { AuthInterceptor } from './service/auth.interceptor';
+import { CollectionService } from './service/collection.service';
 
 
 @NgModule({
@@ -37,10 +39,11 @@ import { CollectionComponent } from './component/collection/collection.component
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
 
-  providers: [AuthService,provideHttpClient(),CookieService],
+  providers: [AuthService,CookieService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},CollectionService],
   bootstrap: [AppComponent],
   
   
