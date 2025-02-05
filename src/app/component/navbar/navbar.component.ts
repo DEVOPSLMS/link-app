@@ -31,6 +31,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     
   }
   signOut() {
+    this.authService.revokeRefresh().subscribe({
+    })
     this.authService.logout();
     this.isCardVisible=false;
   }

@@ -23,7 +23,7 @@
                     <div class="password">
                         
                         <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
-                            class="input-field-modal"(keyup.enter)="login()" autocomplete="off webauthn" placeholder="Enter Password">
+                            class="input-field-modal" autocomplete="off webauthn" placeholder="Enter Password">
                             
                         <button (click)="togglePasswordVisibility()"type="button" class="toggle-button">
                             <span class="material-symbols-outlined">
