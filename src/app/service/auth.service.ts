@@ -1,9 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, take, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,17 +28,37 @@ export class AuthService {
   clearAccessToken(): void {
     this.accessTokenSubject.next(null);
   }
+  refreshToken(){
+    return this.http.post(this.apiUrl+'/refresh-token',{},{withCredentials:true})
+  }
+  revokeRefresh(){
+   
+    return this.http.post(this.apiUrl+'/revoke-refresh-token',{},{withCredentials:true}).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        console.log(error);
+        return throwError(()=>({
 
+        }));
+      }),
+      tap((response:any)=>{
+        console.log(response)
+        
+      })
+    )
+  }
+  getEmail(){
+    return this.http.post(this.apiUrl+'/email',{},{withCredentials:true});
+  }
   login(credentials: { email: string; password: string }): Observable<any> {
 
     return this.http.post(this.apiUrl + '/login', credentials, { withCredentials: true }).pipe(
       
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unknown error occurred.';
-       
-        if (error.status === 500 && error.error.message == 'Email is not verified') {
+        console.log(error)
+        console.log(error.error.message)
+        if (error.status === 500 && error.error.message == 'An unknown error occurred.') {
           errorMessage = 'Email not verified';
-          sessionStorage.setItem("email",credentials.email);
           setTimeout(()=>{
             this.router.navigateByUrl('verify-email');
           },2000)
@@ -57,23 +77,25 @@ export class AuthService {
       tap((response: any) => {
         console.log(response)
         this.setAccessToken(response.accessToken);
-        console.log(this.accessTokenSubject.value)
         this.cookieService.set('refresh_token','true' );
         setTimeout(()=>{
           
           this.refreshTokenSubject.next('true');
         },2000);
-      })
+      }),
+     
     )
   }
 
-  verifyEmail(email:string,code:string){
-    return this.http.post(this.apiUrl+'/Email-Verification',{email,code}).pipe(
+  verifyEmail(email:string,code:string): Observable<any>{
+ 
+    return this.http.post(this.apiUrl+'/Email-Verification',{ email, code:code.toString() },{ withCredentials: true }).pipe(
       catchError((error:HttpErrorResponse)=>{
         let errorMessage = 'An unknown error occurred.';
+        console.log(error)
         if (error.status === 500 && error.error.message == "Email or code doesn't exist") {
           errorMessage = 'Invalid credentials';
-          this.router.navigateByUrl('verify-email');
+    
         } else if (error.status === 500 && error.error.message === "Email doesn't exist") {
           // Use a code from the API response for precise handling
           errorMessage = "Error : Email doesn't exist";
@@ -102,9 +124,10 @@ export class AuthService {
   }
   logout() {
     this.cookieService.delete('refresh_token');
-    sessionStorage.removeItem('token');
     this.refreshTokenSubject.next('');
     this.router.navigateByUrl("home");
+   
+    
   }
   resendEmail(email:string){
     return this.http.post(this.apiUrl+'/Send-Email',{email}).pipe(

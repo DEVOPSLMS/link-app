@@ -20,6 +20,7 @@ export class VerifyEmailComponent implements OnInit{
   isLoadingResend=false;
   sendMessage:string='';
   errorMessage:string=''
+  code:string='';
   constructor(private authService:AuthService,private fb:FormBuilder,private cdr:ChangeDetectorRef,private router:Router){
     this.verify_email = this.fb.group({
       code: ['', [Validators.required]],
@@ -27,16 +28,21 @@ export class VerifyEmailComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.email=sessionStorage.getItem("email");
-    this.maskedEmail=this.maskEmail(this.email);
-  
+    this.authService.getEmail().subscribe({
+      next:(response:any)=>{
+        this.email=response.email;
+        this.maskedEmail=this.maskEmail(this.email);
+      
+      }
+    })
+    
   }
   verifyEmail(){
     this.isLoading=true;
-    this.authService.verifyEmail(this.email,this.verify_email.get('code')?.value).subscribe({
-      next:(response:any)=>{
 
-        sessionStorage.removeItem("email");
+    this.code=this.verify_email.get('code')?.value;
+    this.authService.verifyEmail(this.email,(this.code)).subscribe({
+      next:(response:any)=>{
         setTimeout(()=>{
           this.isLoading=false;
         },2000)
@@ -53,11 +59,12 @@ export class VerifyEmailComponent implements OnInit{
   }
   maskEmail(email: string): string {
     const [localPart, domain] = email.split('@');
-    const maskedLocal = localPart[0] + '*'.repeat(localPart.length - 1);
+    const maskedLocal = localPart[0] + '*'.repeat(Math.min(4, localPart.length - 1));
     const domainParts = domain.split('.');
-    const maskedDomain = domainParts[0][0] + '*'.repeat(domainParts[0].length - 1);
+    const maskedDomain = domainParts[0][0] + '*'.repeat(Math.min(4, domainParts[0].length - 1));
     return `${maskedLocal}@${maskedDomain}.${domainParts[1]}`;
   }
+  
   enforceMaxLength(event: Event) {
     const input = event.target as HTMLInputElement;
     const value = input.value;

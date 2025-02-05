@@ -44,6 +44,7 @@ export class LoginModalComponent {
       this.isLoading = true;
       this.authService.login(this.loginForm.value).subscribe({
         next:(response)=>{
+         
           setTimeout(() => {
             this.isLoading = false;
             this.closeModal();
@@ -62,5 +63,5 @@ export class LoginModalComponent {
       })
     }
   }
- 
+
 }
