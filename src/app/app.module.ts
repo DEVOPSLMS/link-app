@@ -18,7 +18,9 @@ import { VerifyEmailComponent } from './component/verify-email/verify-email.comp
 import { CollectionComponent } from './component/collection/collection.component';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { CollectionService } from './service/collection.service';
-
+import { DragDropModule,CdkDragHandle } from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CdkMenu, CdkMenuItem, CdkMenuTrigger} from '@angular/cdk/menu';
 
 @NgModule({
   declarations: [
@@ -33,14 +35,21 @@ import { CollectionService } from './service/collection.service';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     CollectionComponent,
+
     
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule,
+    CdkDragHandle,
+    CdkMenu,
+    CdkMenuItem,
+    CdkMenuTrigger
   ],
 
   providers: [AuthService,CookieService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},CollectionService],

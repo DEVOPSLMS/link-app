@@ -27,14 +27,17 @@
     margin: 1rem;
 }
 
-.nav-links a {
+.nav-links span {
     text-decoration: none;
     color: black;
     font-size: 1.5rem;
     transition: color 0.3s ease;
+    background-color: none !important;
+  
 }
-.nav-links a:hover {
+.nav-links span:hover {
     color: red;
+    cursor: pointer;
   }
 
 

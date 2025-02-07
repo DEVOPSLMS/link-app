@@ -14,17 +14,17 @@
         </div>
         <ul class="nav-links">
             <li class="tabs">
-                <a href="">Home</a>
+                <span [routerLink]="['/home']">Home</span>
             </li>
             <li class="tabs">
-                <a href="">Links</a>
+                <span href="">Links</span>
             </li>
             <li class="tabs">
-                <a href="collection">Collection</a>
+                <span [routerLink]="['/collection']">Collection</span>
             </li>
 
         </ul>
-        <div class="icons" *ngIf="refresh_token">
+        <div class="icons" *ngIf="refresh_token ">
 
             <span class="material-symbols-outlined">
                 info
