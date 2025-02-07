@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kanban Board</title>
+  
 </head>
+
 <body>
-    <div class="container">
-        <div class="tab">
+    <div cdkDropList class="menu" (cdkDropListDropped)="drop($event)">
+        @for (item of items; track item; let i= $index) {
+          <div class="container">
+            <div class="example-box" cdkDrag>{{item.collectionName}} <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more"> more_horiz
+            </a>
+             </div>
             
-        </div>
-    </div>
+             <div *ngIf="item.showNestedInput" class="nested-input-container">
+              <input 
+                type="text" 
+                placeholder="Nested collection name"
+                [(ngModel)]="item.newNestedName"
+                (keyup.enter)="addNestedCollection(item)"
+                class="addCollection"
+                autofocus
+              >
+            </div>
+             
+              <ng-template #menu>
+                  <div class="example-menu" cdkMenu>
+                    <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput(i)">Add nested collection</a>
+                    <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
+                    <a class="example-menu-item" cdkMenuItem>View collection details</a>
+                    <a class="example-menu-item" cdkMenuItem>Delete collection</a>
+                  </div>
+                </ng-template>
+          </div>
+         
+        }
+        
+      </div>
+
+
+
 </body>
+
 </html>

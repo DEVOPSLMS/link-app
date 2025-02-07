@@ -19,4 +19,11 @@ export class CollectionService {
 
   )
  }
+ addCollection(){
+  return this.http.post(this.apiUrl+"/link/create-collection",{},{withCredentials:true}).pipe(
+    tap((response:any)=>{
+      console.log(response);
+    })
+  )
+ }
 }

@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, catchError, Observable, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, take, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +21,17 @@ export class AuthService {
   constructor(private cookieService: CookieService,private router: Router) { }
   setAccessToken(token: string): void {
     this.accessTokenSubject.next(token);
+  
   }
-  getAccessToken(): string | null {
-    return this.accessTokenSubject.value;
+  getAccessToken(): Observable<string> {
+    return this.http.post<{ access_token: string }>(this.apiUrl + '/get-access-token', {}, { withCredentials: true })
+      .pipe(
+        tap((response:any)=>{
+          console.log(response)
+          console.log("hello")
+        })
+        
+      );
   }
   clearAccessToken(): void {
     this.accessTokenSubject.next(null);
@@ -31,21 +39,7 @@ export class AuthService {
   refreshToken(){
     return this.http.post(this.apiUrl+'/refresh-token',{},{withCredentials:true})
   }
-  revokeRefresh(){
-   
-    return this.http.post(this.apiUrl+'/revoke-refresh-token',{},{withCredentials:true}).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        console.log(error);
-        return throwError(()=>({
 
-        }));
-      }),
-      tap((response:any)=>{
-        console.log(response)
-        
-      })
-    )
-  }
   getEmail(){
     return this.http.post(this.apiUrl+'/email',{},{withCredentials:true});
   }
@@ -126,8 +120,11 @@ export class AuthService {
     this.cookieService.delete('refresh_token');
     this.refreshTokenSubject.next('');
     this.router.navigateByUrl("home");
-   
+    this.userLogout().subscribe({})
     
+  }
+  userLogout(){
+    return this.http.post(this.apiUrl+'/logout',{},{withCredentials:true});
   }
   resendEmail(email:string){
     return this.http.post(this.apiUrl+'/Send-Email',{email}).pipe(

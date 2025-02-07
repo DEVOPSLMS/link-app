@@ -9,6 +9,7 @@ import { VerifyEmailComponent } from './component/verify-email/verify-email.comp
 import { CollectionComponent } from './component/collection/collection.component';
 
 
+
 const routes: Routes = [
   {
     path: '',                       
@@ -28,6 +29,8 @@ const routes: Routes = [
         path: 'collection',
         component: CollectionComponent 
       },
+    
+      
 
     ]
   },
