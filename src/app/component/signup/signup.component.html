@@ -9,30 +9,68 @@
     <div class="container">
         
         
-        <form action="">
-            <p class="header-text">Create an account<span>Log In</span></p>
+        <form action=""[formGroup]="registerForm" (ngSubmit)="signUp()">
+            <p class="header-text">Create an account<span [routerLink]="['/home']">Home</span></p>
             <p class="password-text">* Password must be at least 8 characters long  <br>* Have at least one lower-case and upper-case letter (Aa - Zz), <br>* One special symbol ( #,!,&#64; etc )<br>* At least one number ( 1-9 ) </p>
             <div class="input-family">
                 <p>Email</p>
-                <input type="email"autocomplete="off webauthn" placeholder="Enter Email">
+                <input type="email"autocomplete="off webauthn" placeholder="Enter Email"formControlName="email">
+                <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+                    <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+                    <div *ngIf="registerForm.get('email')?.errors?.['email']">Email is invalid</div>
+                  </div>
             </div>
             <div class="input-family">
-                <p>Email</p>
-                <input type="text" placeholder="Enter First Name">
+                <p>First Name</p>
+                <input type="text" placeholder="Enter First Name"formControlName="FirstName">
             </div>
             <div class="input-family">
-                <p>Email</p>
-                <input type="text" placeholder="Enter Last Name">                
+                <p>Last Name</p>
+                <input type="text" placeholder="Enter Last Name"formControlName="LastName">                
+            </div>
+            
+            <div class="input-family">
+                <p>Password</p>
+                <div class="password-input">
+                    <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter Password"formControlName="password">   
+                    <button (click)="togglePasswordVisibility()"type="button" class="toggle-button">
+                        <span class="material-symbols-outlined">
+                            {{ showPassword ? 'visibility_off' : 'visibility' }}
+                        </span>
+                    </button>   
+                    <div *ngIf="registerForm.get('password')?.invalid ">
+                       
+                        
+                          <ul class="requirements">
+                            <li [class.met]="hasUpperCase" [class.not-met]="!hasUpperCase">At least one uppercase letter</li>
+                            <li [class.met]="hasLowerCase" [class.not-met]="!hasLowerCase">At least one lowercase letter</li>
+                            <li [class.met]="hasNumber" [class.not-met]="!hasNumber">At least one number</li>
+                            <li [class.met]="hasSpecialChar" [class.not-met]="!hasSpecialChar">At least one special character</li>
+                            <li [class.met]="isValidLength" [class.not-met]="!isValidLength">At least 8 characters</li>
+                          </ul>
+                     
+                      </div>  
+                </div>
+             
             </div>
             <div class="input-family">
-                <p>Email</p>
-                <input type="password" placeholder="Enter Password">                
+                <p>Confirm Password</p>
+                <div class="password-input">
+                    <input [type]="showPassword ? 'text' : 'password'" placeholder="Confirm Password"formControlName="confirmPassword">   
+                    <button (click)="togglePasswordVisibility()"type="button" class="toggle-button">
+                        <span class="material-symbols-outlined">
+                            {{ showPassword ? 'visibility_off' : 'visibility' }}
+                        </span>
+                    </button>     
+                    <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+                        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required</div>
+                        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['confirmPasswordMismatch']">Passwords do not match</div>
+                      </div>       
+                </div>
+                       
             </div>
-            <div class="input-family">
-                <p>Email</p>
-                <input type="password" placeholder="Confirm Password">                    
-            </div>
-            <button class="signup">Regiser account</button>
+            <p class="terms">By creating an account, you agree with our <span>Terms of Service</span>  </p>
+            <button type="submit" class="signup">Create account</button>
         </form>
         
     </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, map, Observable, take, tap, throwError } from 'rxjs';
+import { EncryptionService } from './encryption.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,13 @@ export class AuthService {
   private accessToken: string | null = null;
   private accessTokenSubject = new BehaviorSubject<string | null>(null);
   accessToken$ = this.accessTokenSubject.asObservable();
-  constructor(private cookieService: CookieService,private router: Router) { }
+  
+  constructor(private cookieService: CookieService,private router: Router,private encryptService:EncryptionService) { }
   setAccessToken(token: string): void {
     this.accessTokenSubject.next(token);
   
   }
+
   getAccessToken(): Observable<string> {
     return this.http.post<{ access_token: string }>(this.apiUrl + '/get-access-token', {}, { withCredentials: true })
       .pipe(
@@ -43,15 +46,32 @@ export class AuthService {
   getEmail(){
     return this.http.post(this.apiUrl+'/email',{},{withCredentials:true});
   }
-  login(credentials: { email: string; password: string }): Observable<any> {
-
+  register(email:string,FirstName:string,LastName:string,password:string,role:string):Observable<any>{
+    return this.http.post(this.apiUrl+'/register',{email,FirstName,LastName,password,role}).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        return throwError(() => ({
+          code: error.error?.code || '500',
+          
+        }));
+      }),
+      tap((response:any)=>{
+        console.log(response);
+        setTimeout(() => {
+          this.router.navigateByUrl("/verify-email");
+        }, 2000);
+       
+      })
+    )
+  }
+  login(credentials: { email: string, password: string }): Observable<any> {
+    
     return this.http.post(this.apiUrl + '/login', credentials, { withCredentials: true }).pipe(
       
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unknown error occurred.';
         console.log(error)
         console.log(error.error.message)
-        if (error.status === 500 && error.error.message == 'An unknown error occurred.') {
+        if (error.status === 0 ) {
           errorMessage = 'Email not verified';
           setTimeout(()=>{
             this.router.navigateByUrl('verify-email');
