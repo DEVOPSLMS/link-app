@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-verify-email',
@@ -30,9 +31,16 @@ export class VerifyEmailComponent implements OnInit{
   ngOnInit(): void {
     this.authService.getEmail().subscribe({
       next:(response:any)=>{
-        this.email=response.email;
-        this.maskedEmail=this.maskEmail(this.email);
+        
+        
+          this.email=response.email;
+          this.maskedEmail=this.maskEmail(this.email);
+        
       
+      },
+      error:(error:any)=>{
+        
+        this.router.navigateByUrl("/home");
       }
     })
     

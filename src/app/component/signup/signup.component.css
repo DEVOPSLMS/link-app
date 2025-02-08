@@ -17,8 +17,9 @@ form{
 }
 .input-family{
     margin-left: 1rem;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    
 }
 .input-family p{
     font-size: 1.2rem;
@@ -32,7 +33,7 @@ form{
 input{
     height:2.5rem;
     width:20rem;
-    margin-left:10rem;
+    
     font-size: 1.2rem;
     border-radius: 0.5rem;
     -webkit-border-radius: 0.5rem;
@@ -53,7 +54,48 @@ input:focus{
 }
 .header-text span{
     float:right;
+    cursor: pointer;
+    text-underline-offset: 0.2rem;
+    text-decoration-color: white;
+    text-decoration-line: underline;
+    -moz-text-decoration-line: underline;
+    -moz-text-decoration-color: white;
 }
 .signup{
-    width: 30rem;
+    width: 10rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border:none;
 }
+.terms{
+    margin-left:1rem;
+    font-size: 1rem;
+}
+.terms span{
+    color:red;
+    cursor: pointer;
+}
+.toggle-button {
+    position: absolute;
+    left:73rem;
+    margin-top: 0.5rem;
+    padding:0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+  }
+  .requirements{
+    font-size: 1rem;
+  }
+  .requirements li {
+    color: red;
+    margin-left: 1.2rem; /* Default color for unmet requirements */
+  }
+  .requirements li.met {
+    color: green; /* Color for met requirements */
+  }
+  .requirements li.not-met{
+    color: red;
+  }
