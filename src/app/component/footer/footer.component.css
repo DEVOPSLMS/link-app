@@ -1,0 +1,13 @@
+button{
+    background-color: white;
+    color:red;
+}
+.tree-invinsible{
+    display:none;
+}
+.tree-node{
+    display: block;
+}
+.tree-node .tree-node{
+    padding-left: 40px;
+}

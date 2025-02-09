@@ -4,43 +4,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban Board</title>
+    <title></title>
   
 </head>
 
 <body>
-    <div cdkDropList class="menu" (cdkDropListDropped)="drop($event)">
-        @for (item of items; track item; let i= $index) {
-          <div class="container">
-            <div class="example-box" cdkDrag>{{item.collectionName}} <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more"> more_horiz
-            </a>
-             </div>
-            
-             <div *ngIf="item.showNestedInput" class="nested-input-container">
-              <input 
-                type="text" 
-                placeholder="Nested collection name"
-                [(ngModel)]="item.newNestedName"
-                (keyup.enter)="addNestedCollection(item)"
-                class="addCollection"
-                autofocus
-              >
-            </div>
-             
-              <ng-template #menu>
-                  <div class="example-menu" cdkMenu>
-                    <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput(i)">Add nested collection</a>
-                    <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
-                    <a class="example-menu-item" cdkMenuItem>View collection details</a>
-                    <a class="example-menu-item" cdkMenuItem>Delete collection</a>
-                  </div>
-                </ng-template>
-          </div>
-         
-        }
-        
+  <div class="container">
+    <div class="left-container">
+      <div class="icon-list">
+        <span class="material-symbols-outlined">
+          add
+          </span>
+          <span class="material-symbols-outlined">
+            delete
+            </span>
       </div>
+      
+      <div cdkDropList class="menu" (cdkDropListDropped)="drop($event)">
+        @for (item of items; track item; let i = $index) {
+          <div class="collection-container">
+            <!-- Parent Collection -->
+            <div class="example-box" cdkDrag>
+              <p>
+                <span class="material-symbols-outlined arrow" 
+                      (click)="toggleChildren(item)" 
+                      [class.rotated]="item.showChildren">
+                  chevron_right
+                </span>
+                {{item.collectionName}}
+              </p>
+              <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
+                more_horiz
+              </a>
+            </div>
+      
+            <!-- Nested Input -->
+            <div *ngIf="item.showNestedInput" class="nested-input-container">
+              <input type="text" 
+                     placeholder="Nested collection name"
+                     [(ngModel)]="item.newNestedName"
+                     (keyup.enter)="addNestedCollection(item)"
+                     class="addCollection"
+                     autofocus>
+            </div>
+      
+            <!-- Child Collections -->
+            @if (item.childCollections && item.showChildren) {
+              <div class="child-collections">
+                @for (child of item.childCollections; track child; let j = $index) {
+                  <div class="collection-container nested">
+                    <!-- Child Collection Box -->
+                    <div class="example-box" cdkDrag>
+                      <p>
+                        <span class="material-symbols-outlined arrow" 
+                              (click)="toggleChildren(child)" 
+                              [class.rotated]="child.showChildren">
+                          chevron_right
+                        </span>
+                        {{child.collectionName}}
+                      </p>
+                      <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
+                        more_horiz
+                      </a>
+                    </div>
+      
+                    <!-- Recursive Child Collections -->
+                    @if (child.childCollections && child.showChildren) {
+                      <div class="child-collections">
+                        <div class="child-collections">
+                          @for (subchild of child.childCollections; track subchild; let y = $index) {
+                            <div class="collection-container nested">
+                              <!-- Child Collection Box -->
+                              <div class="example-box" cdkDrag>
+                                <p>
+                                  <span class="material-symbols-outlined arrow" 
+                                        (click)="toggleChildren(child)" 
+                                        [class.rotated]="child.showChildren">
+                                    chevron_right
+                                  </span>
+                                  {{subchild.collectionName}}
+                                </p>
+                                <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
+                                  more_horiz
+                                </a>
+                              </div>
+                
+                              <!-- Recursive Child Collections -->
+                              @if (subchild.childCollections && subchild.showChildren) {
+                                <div class="child-collections">
+                                  <!-- This would repeat the same structure recursively -->
+                                  <!-- For simplicity, you might want to create a nested component -->
+                                </div>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+      
+            <ng-template #menu>
+              <div class="example-menu" cdkMenu>
+                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput(i)">Add nested collection</a>
+                <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
+                <a class="example-menu-item" cdkMenuItem>View collection details</a>
+                <a class="example-menu-item" cdkMenuItem>Delete collection</a>
+              </div>
+            </ng-template>
+          </div>
+        }
+      </div>
+    
+    </div>
+    <div class="right-container">
+      <cdk-tree [dataSource]="test"[treeControl]="treeControl">
+        <cdk-nested-tree-node *cdkTreeNodeDef="let node"class="tree-node">
+            <button disabled>{{node.collectionName}}</button>
+        </cdk-nested-tree-node>
+        <cdk-nested-tree-node *cdkTreeNodeDef="let node;when: hasChild"class="tree-node">
+            <span cdkTreeNodeToggle>
+                <span class="material-symbols-outlined">
+                    {{treeControl.isExpanded(node)?'stat_minus_1':'chevron_right'}}
+                    </span>
+                    
+                      {{node.collectionName}}
+                    
+                  </span>
+                  
+            
+            <div [class.tree-invinsible]="!treeControl.isExpanded(node)">
+                <ng-container cdkTreeNodeOutlet>
+                    
+                </ng-container>
+            </div>
+        </cdk-nested-tree-node>
+    </cdk-tree>
+    </div>
 
+  </div>
+ 
 
 
 </body>

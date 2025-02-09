@@ -21,6 +21,8 @@ import { CollectionService } from './service/collection.service';
 import { DragDropModule,CdkDragHandle } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CdkMenu, CdkMenuItem, CdkMenuTrigger} from '@angular/cdk/menu';
+import{CdkTreeModule}from'@angular/cdk/tree';
+import { ApplicationComponent } from './component/application/application.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import {CdkMenu, CdkMenuItem, CdkMenuTrigger} from '@angular/cdk/menu';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     CollectionComponent,
+    ApplicationComponent,
 
     
   ],
@@ -49,7 +52,9 @@ import {CdkMenu, CdkMenuItem, CdkMenuTrigger} from '@angular/cdk/menu';
     CdkDragHandle,
     CdkMenu,
     CdkMenuItem,
-    CdkMenuTrigger
+    CdkMenuTrigger,
+    CdkTreeModule
+    
   ],
 
   providers: [AuthService,CookieService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},CollectionService],

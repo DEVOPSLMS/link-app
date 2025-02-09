@@ -7,6 +7,9 @@ import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.com
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 import { CollectionComponent } from './component/collection/collection.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { ApplicationComponent } from './component/application/application.component';
+
 
 
 
@@ -29,7 +32,14 @@ const routes: Routes = [
         path: 'collection',
         component: CollectionComponent 
       },
-    
+      {
+        path: 'footer',
+        component: FooterComponent 
+      },
+      {
+        path: 'app',
+        component: ApplicationComponent 
+      },
       
 
     ]
