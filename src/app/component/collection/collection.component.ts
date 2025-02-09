@@ -3,6 +3,8 @@ import { CollectionService } from '../../service/collection.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { NestedTreeControl } from '@angular/cdk/tree';
 
 @Component({
   selector: 'app-collection',
@@ -17,7 +19,9 @@ export class CollectionComponent implements OnInit{
   addCollectionForm:FormGroup
   items:any;
   isVisible =false;
-  
+  test = new ArrayDataSource<any>([]); 
+  treeControl= new NestedTreeControl((node:any)=>node.childCollections);
+  hasChild = (_: number, node: any) => !!node.childCollections && node.childCollections.length > 0;
   constructor(private collectionService:CollectionService){
     this.addCollectionForm = this.fb.group({
           name: ['', [Validators.required]],
@@ -29,12 +33,11 @@ export class CollectionComponent implements OnInit{
       next:(response)=>{
        
         this.items=response;
-        this.items=response.map((item: any)=>({
-          ...item,
-          inputVisible:false
-          
-        }));
+     
         console.log(response);
+        this.test=response;
+        console.log(this.test);
+        
       },
       error:(err)=>{
         console.log("Error fetching collections",err);
@@ -43,6 +46,7 @@ export class CollectionComponent implements OnInit{
     this.loadItems();
   }
   drop(event: CdkDragDrop<string[]>) {
+    const data= this.items.data;
     moveItemInArray(this.items, event.previousIndex, event.currentIndex);
     this.saveItems();
   }
@@ -54,6 +58,9 @@ export class CollectionComponent implements OnInit{
     if (savedItems) {
       this.items = JSON.parse(savedItems);
     }
+  }
+  toggleChildren(item: any) {
+    item.showChildren = !item.showChildren;
   }
   toggleNestedInput(index: number) {
     // Reset all other inputs
