@@ -24,10 +24,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authSubscription = this.authService.refreshToken$.subscribe(token => {
       this.refresh_token = token;
+      
     });
     
-    const savedToken = this.authService.getRefreshToken();
-    if (savedToken) this.refresh_token = savedToken;
+    const savedToken = this.authService.refreshToken().subscribe({
+      next:(response:any)=>{
+        this.refresh_token=true;
+     
+      },
+      error:(error:any)=>{
+  
+        this.refresh_token=false
+      }
+    })
+
+    if (savedToken) this.refresh_token = 'true';
     
   }
   signOut() {
