@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit{
     if(this.registerForm.valid){
      
       this.authService.register(this.registerForm.get('email')?.value,this.registerForm.get('FirstName')?.value,this.registerForm.get('LastName')?.value,
-      this.registerForm.get('password')?.value,'user').subscribe({
+      this.registerForm.get('password')?.value).subscribe({
         next(response){
           console.log(response);
           

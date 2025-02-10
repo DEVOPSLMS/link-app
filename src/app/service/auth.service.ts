@@ -46,8 +46,8 @@ export class AuthService {
   getEmail(){
     return this.http.post(this.apiUrl+'/email',{},{withCredentials:true});
   }
-  register(email:string,FirstName:string,LastName:string,password:string,role:string):Observable<any>{
-    return this.http.post(this.apiUrl+'/register',{email,FirstName,LastName,password,role}).pipe(
+  register(email:string,FirstName:string,LastName:string,password:string):Observable<any>{
+    return this.http.post(this.apiUrl+'/register',{email,FirstName,LastName,password}).pipe(
       catchError((error:HttpErrorResponse)=>{
         return throwError(() => ({
           code: error.error?.code || '500',
@@ -91,7 +91,7 @@ export class AuthService {
       tap((response: any) => {
         console.log(response)
         this.setAccessToken(response.accessToken);
-        this.cookieService.set('refresh_token','true' );
+       
         setTimeout(()=>{
           
           this.refreshTokenSubject.next('true');
@@ -124,7 +124,7 @@ export class AuthService {
         
         this.setAccessToken(response.accessToken);
         this.refreshTokenSubject.next('true');
-        this.cookieService.set('refresh_token','true' );
+
         setTimeout(()=>{
           this.router.navigateByUrl('/home');
         },2000);
@@ -133,11 +133,9 @@ export class AuthService {
     )
   }
 
-  getRefreshToken() {
-    return this.cookieService.get('refresh_token');
-  }
+
   logout() {
-    this.cookieService.delete('refresh_token');
+
     this.refreshTokenSubject.next('');
     this.router.navigateByUrl("home");
     this.userLogout().subscribe({})
@@ -161,10 +159,17 @@ export class AuthService {
         }));
       }),
       tap((response: any) => {
-        
-        
-        
+
       })
+    )
+  }
+  verifyUser(){
+    return this.http.post(this.apiUrl+'check',{},{withCredentials:true}).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        return throwError(()=>({
+          code:error.error?.code || '500'
+        }))
+      }),
     )
   }
 }

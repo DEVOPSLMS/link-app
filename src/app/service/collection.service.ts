@@ -20,8 +20,8 @@ export class CollectionService {
 
   )
  }
- addCollection(){
-  return this.http.post(this.apiUrl+"/link/create-collection",{},{withCredentials:true}).pipe(
+ addCollection(collectionName:string,parentCollectionId:string){
+  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,parentCollectionId},{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })

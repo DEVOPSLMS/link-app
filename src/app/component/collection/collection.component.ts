@@ -19,9 +19,8 @@ export class CollectionComponent implements OnInit{
   addCollectionForm:FormGroup
   items:any;
   isVisible =false;
-  test = new ArrayDataSource<any>([]); 
-  treeControl= new NestedTreeControl((node:any)=>node.childCollections);
-  hasChild = (_: number, node: any) => !!node.childCollections && node.childCollections.length > 0;
+  isSubCollection:any;
+ 
   constructor(private collectionService:CollectionService){
     this.addCollectionForm = this.fb.group({
           name: ['', [Validators.required]],
@@ -35,8 +34,7 @@ export class CollectionComponent implements OnInit{
         this.items=response;
      
         console.log(response);
-        this.test=response;
-        console.log(this.test);
+  
         
       },
       error:(err)=>{
@@ -62,24 +60,47 @@ export class CollectionComponent implements OnInit{
   toggleChildren(item: any) {
     item.showChildren = !item.showChildren;
   }
-  toggleNestedInput(index: number) {
-    // Reset all other inputs
-    this.items.forEach((item: { showNestedInput: boolean; }) => item.showNestedInput = false);
-    // Toggle input for clicked item
-    this.items[index].showNestedInput = !this.items[index].showNestedInput;
-    this.items[index].newNestedName = ''; // Reset input value
+  toggleNestedInput(targetItem: any) {
+    this.resetNestedInputs(this.items);
+    targetItem.showNestedInput = !targetItem.showNestedInput;
+    targetItem.newNestedName = ''; // Reset input value
+
+  }
+  resetNestedInputs(items: any[]): void {
+    items.forEach(item => {
+      item.showNestedInput = false;
+      if (item.childCollections?.length) {
+        this.resetNestedInputs(item.childCollections);
+      }
+    });
   }
   addNestedCollection(parentItem: any) {
-    if (parentItem.newNestedName?.trim()) {
-      // Add your logic to create nested collection
-      const newNestedCollection = {
-        collectionName: parentItem.newNestedName.trim(),
-        parentId: parentItem.id,
-        showNestedInput: false
-      };
-      
-      // Update your data structure here
 
-    }
+  
+    this.collectionService.addCollection(this.addCollectionForm.get('name')?.value,parentItem.id).subscribe({
+      next:(response:any)=>{
+        const newCollection = response;
+
+        // Initialize properties if necessary
+        newCollection.childCollections = [];
+        newCollection.showChildren = false;
+        newCollection.showNestedInput = false;
+
+        // Add the new collection to the parent item's childCollections array
+        if (!parentItem.childCollections) {
+            parentItem.childCollections = [];
+        }
+        parentItem.childCollections.push(newCollection);
+        parentItem.showNestedInput=false;
+        // Optionally, clear the form input
+        this.addCollectionForm.reset();
+      },
+      error:(error:any)=>{
+        console.log(error);
+      }
+    })
+  }
+  consoleLog(item:string){
+    
   }
 }
