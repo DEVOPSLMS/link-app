@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CollectionService } from '../../service/collection.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { NestedTreeControl } from '@angular/cdk/tree';
-
+import { Subject, Subscription, takeUntil } from 'rxjs';
+takeUntil
 @Component({
   selector: 'app-collection',
   standalone: false,
@@ -13,14 +14,15 @@ import { NestedTreeControl } from '@angular/cdk/tree';
   templateUrl: './collection.component.html',
   styleUrl: './collection.component.css'
 })
-export class CollectionComponent implements OnInit{
+export class CollectionComponent implements OnInit,OnDestroy{
   router=inject(Router);
   fb=inject(FormBuilder);
   addCollectionForm:FormGroup
   items:any;
   isVisible =false;
   isSubCollection:any;
- 
+  private subscription:Subscription;
+  private destroy$ = new Subject<void>();
   constructor(private collectionService:CollectionService){
     this.addCollectionForm = this.fb.group({
           name: ['', [Validators.required]],
@@ -28,7 +30,8 @@ export class CollectionComponent implements OnInit{
         });
   }
   ngOnInit(): void {
-    this.collectionService.getCollection().subscribe({
+   this.subscription= this.collectionService.getCollection().pipe(takeUntil(this.destroy$))
+    .subscribe({
       next:(response)=>{
        
         this.items=response;
@@ -101,6 +104,16 @@ export class CollectionComponent implements OnInit{
     })
   }
   consoleLog(item:string){
+    
+  }
+  ngOnDestroy() {
+    if(this.subscription)
+    {
+      this.subscription.unsubscribe();
+      this.destroy$.next();
+    this.destroy$.complete();
+    console.log("destroyed")
+    }
     
   }
 }

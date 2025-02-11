@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, catchError, map, Observable, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, map, Observable, take, tap, throwError } from 'rxjs';
 import { EncryptionService } from './encryption.service';
 
 @Injectable({
@@ -16,35 +16,41 @@ export class AuthService {
   refreshToken$ = this.refreshTokenSubject.asObservable();
   private email = new BehaviorSubject<string>(''); // Default value
   currentEmail = this.email.asObservable();
-  private accessToken: string | null = null;
-  private accessTokenSubject = new BehaviorSubject<string | null>(null);
-  accessToken$ = this.accessTokenSubject.asObservable();
-  
+  private isLoggedinSubject=new BehaviorSubject<boolean>(true);
+  public isLoggedin$=this.isLoggedinSubject.asObservable();
   constructor(private cookieService: CookieService,private router: Router,private encryptService:EncryptionService) { }
-  setAccessToken(token: string): void {
-    this.accessTokenSubject.next(token);
-  
-  }
 
-  getAccessToken(): Observable<string> {
-    return this.http.post<{ access_token: string }>(this.apiUrl + '/get-access-token', {}, { withCredentials: true })
-      .pipe(
-        tap((response:any)=>{
-          console.log(response)
-          console.log("hello")
-        })
-        
-      );
-  }
-  clearAccessToken(): void {
-    this.accessTokenSubject.next(null);
-  }
+
+
   refreshToken(){
-    return this.http.post(this.apiUrl+'/refresh-token',{},{withCredentials:true})
+    return this.http.post(this.apiUrl+'/refresh-token',{},{withCredentials:true}).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        let errorMessage = 'An unknown error occurred.';
+        if (error.status === 500 && error.error.message == "Refresh token not found.") {
+          errorMessage = 'Invalid credentials';
+    
+        } else if (error.status === 500 && error.error.message === "Invalid refresh token") {
+          // Use a code from the API response for precise handling
+          errorMessage = "Error : Invalid credentials";
+        }
+        return throwError(() => ({
+          code: error.error?.code || '500',
+          message:errorMessage
+        }));
+      }),
+      tap({
+        next:()=>this.isLoggedinSubject.next(true),
+        error:()=>this.isLoggedinSubject.next(false)
+      })
+    
+      
+    )
   }
 
   getEmail(){
-    return this.http.post(this.apiUrl+'/email',{},{withCredentials:true});
+    return this.http.post(this.apiUrl+'/email',{},{withCredentials:true}).pipe(
+      catchError(error=> EMPTY),
+    );
   }
   register(email:string,FirstName:string,LastName:string,password:string):Observable<any>{
     return this.http.post(this.apiUrl+'/register',{email,FirstName,LastName,password}).pipe(
@@ -90,11 +96,11 @@ export class AuthService {
       }),
       tap((response: any) => {
         console.log(response)
-        this.setAccessToken(response.accessToken);
+      
        
         setTimeout(()=>{
           
-          this.refreshTokenSubject.next('true');
+          this.isLoggedinSubject.next(true);
         },2000);
       }),
      
@@ -104,27 +110,10 @@ export class AuthService {
   verifyEmail(email:string,code:string): Observable<any>{
  
     return this.http.post(this.apiUrl+'/Email-Verification',{ email, code:code.toString() },{ withCredentials: true }).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        let errorMessage = 'An unknown error occurred.';
-        console.log(error)
-        if (error.status === 500 && error.error.message == "Email or code doesn't exist") {
-          errorMessage = 'Invalid credentials';
+      catchError(error=> EMPTY),
     
-        } else if (error.status === 500 && error.error.message === "Email doesn't exist") {
-          // Use a code from the API response for precise handling
-          errorMessage = "Error : Email doesn't exist";
-        }
-        
-        return throwError(() => ({
-          code: error.error?.code || '500',
-          message: errorMessage
-        }));
-      }),
       tap((response: any) => {
-        
-        this.setAccessToken(response.accessToken);
         this.refreshTokenSubject.next('true');
-
         setTimeout(()=>{
           this.router.navigateByUrl('/home');
         },2000);
@@ -136,40 +125,30 @@ export class AuthService {
 
   logout() {
 
-    this.refreshTokenSubject.next('');
+    this.isLoggedinSubject.next(false);
     this.router.navigateByUrl("home");
     this.userLogout().subscribe({})
     
   }
   userLogout(){
-    return this.http.post(this.apiUrl+'/logout',{},{withCredentials:true});
+    return this.http.post(this.apiUrl+'/logout',{},{withCredentials:true}).pipe(
+      catchError(error=> EMPTY),
+    );
   }
   resendEmail(email:string){
     return this.http.post(this.apiUrl+'/Send-Email',{email}).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        let errorMessage = 'An unknown error occurred.';
-        if (error.status === 500 && error.error.message === "Email doesn't exist") {
-          // Use a code from the API response for precise handling
-          errorMessage = "Error : Email doesn't exist";
-        }
-        
-        return throwError(() => ({
-          code: error.error?.code || '500',
-          message: errorMessage
-        }));
-      }),
+      catchError(error=> EMPTY),
       tap((response: any) => {
 
       })
     )
   }
   verifyUser(){
-    return this.http.post(this.apiUrl+'check',{},{withCredentials:true}).pipe(
-      catchError((error:HttpErrorResponse)=>{
-        return throwError(()=>({
-          code:error.error?.code || '500'
-        }))
-      }),
+    return this.http.post(this.apiUrl+'/check-user',{},{withCredentials:true,responseType:'text'}).pipe(
+      catchError(error=> EMPTY),
+      tap((response:any)=>{
+        console.log(response);
+      })
     )
   }
 }
