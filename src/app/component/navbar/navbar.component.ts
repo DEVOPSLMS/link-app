@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../service/auth.service';
+import { AuthInterceptor } from '../../service/auth.interceptor';
 
 
 @Component({
@@ -15,31 +16,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   @ViewChild('accountIcon') accountIcon!: ElementRef;
   @ViewChild('card') card!: ElementRef;
   isCardVisible = false;
-  refresh_token: any;
+  isLoggedin: any;
   isVisible = false;
   private authSubscription: Subscription | null = null;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authSubscription = this.authService.refreshToken$.subscribe(token => {
-      this.refresh_token = token;
-      
-    });
     
-    const savedToken = this.authService.refreshToken().subscribe({
-      next:(response:any)=>{
-        this.refresh_token=true;
-     
-      },
-      error:(error:any)=>{
-  
-        this.refresh_token=false
-      }
+    this.checkUser();
+  }
+  public checkUser(){
+    this.authService.isLoggedin$.subscribe((status:any)=>{
+      this.isLoggedin=status;
     })
-
-    if (savedToken) this.refresh_token = 'true';
-    
   }
   signOut() {
     this.authService.logout();

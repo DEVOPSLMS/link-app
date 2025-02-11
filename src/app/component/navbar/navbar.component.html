@@ -24,9 +24,9 @@
             </li>
 
         </ul>
-        <div class="icons" *ngIf="refresh_token ">
+        <div class="icons" *ngIf="isLoggedin ">
 
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined"data-tooltip="Info">
                 info
             </span>
             <!-- <span class="material-symbols-outlined">
@@ -39,13 +39,13 @@
         </div>
 
         <app-login-modal #loginModal></app-login-modal>
-        <div class="icons" *ngIf="!refresh_token">
+        <div class="icons" *ngIf="!isLoggedin">
 
             <span class="material-symbols-outlined">
                 info
             </span>
 
-            <span class="material-symbols-outlined" (click)="loginModal.openModal()">
+            <span class="material-symbols-outlined"data-tooltip="Login" title="login" (click)="loginModal.openModal()">
                 login
             </span>
 

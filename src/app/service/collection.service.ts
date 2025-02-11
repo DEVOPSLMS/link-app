@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, tap } from 'rxjs';
+import { catchError, EMPTY, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class CollectionService {
   constructor() { }
  getCollection(){
   return this.http.get(this.apiUrl+"/link/collection-by-user",{withCredentials:true}).pipe(
+    catchError(error=> EMPTY),
   
     tap((response:any)=>{
       
