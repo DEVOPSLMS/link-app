@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CollectionService } from '../../service/collection.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
@@ -15,12 +15,16 @@ takeUntil
   styleUrl: './collection.component.css'
 })
 export class CollectionComponent implements OnInit,OnDestroy{
+  @ViewChild('exampleBox') exampleBox!: ElementRef;
   router=inject(Router);
   fb=inject(FormBuilder);
   addCollectionForm:FormGroup
   items:any;
   isVisible =false;
   isSubCollection:any;
+  activeItemId: number | null = null;
+  userClicked:any;
+  collectionName:any;
   private subscription:Subscription;
   private destroy$ = new Subject<void>();
   constructor(private collectionService:CollectionService){
@@ -29,16 +33,12 @@ export class CollectionComponent implements OnInit,OnDestroy{
           
         });
   }
+  // This method gets the collection of the user based on Id
   ngOnInit(): void {
    this.subscription= this.collectionService.getCollection().pipe(takeUntil(this.destroy$))
     .subscribe({
       next:(response)=>{
-       
         this.items=response;
-     
-        console.log(response);
-  
-        
       },
       error:(err)=>{
         console.log("Error fetching collections",err);
@@ -63,7 +63,8 @@ export class CollectionComponent implements OnInit,OnDestroy{
   toggleChildren(item: any) {
     item.showChildren = !item.showChildren;
   }
-  toggleNestedInput(targetItem: any) {
+  toggleNestedInput(event: MouseEvent,targetItem: any) {
+    event.stopPropagation(); 
     this.resetNestedInputs(this.items);
     targetItem.showNestedInput = !targetItem.showNestedInput;
     targetItem.newNestedName = ''; // Reset input value
@@ -78,8 +79,6 @@ export class CollectionComponent implements OnInit,OnDestroy{
     });
   }
   addNestedCollection(parentItem: any) {
-
-  
     this.collectionService.addCollection(this.addCollectionForm.get('name')?.value,parentItem.id).subscribe({
       next:(response:any)=>{
         const newCollection = response;
@@ -103,8 +102,12 @@ export class CollectionComponent implements OnInit,OnDestroy{
       }
     })
   }
-  consoleLog(item:string){
-    
+  toggleRightContainer(item:any){
+    if (this.activeItemId !== item.id) {
+      this.activeItemId = item.id; // Set the clicked item as active
+      this.userClicked=true;
+      this.collectionName=item.collectionName;
+    }
   }
   ngOnDestroy() {
     if(this.subscription)
@@ -114,6 +117,42 @@ export class CollectionComponent implements OnInit,OnDestroy{
     this.destroy$.complete();
     console.log("destroyed")
     }
-    
+  }
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    // Check if the click was inside any of the example-box or nested-input-container elements
+    const clickedInsideExampleBox = this.items.some((item:any) => {
+      const boxElement = document.getElementById(`item-${item.id}`);
+      return boxElement && boxElement.contains(event.target as Node);
+    });
+
+    // Check if the click was inside any of the nested input fields (including nested collections)
+    const clickedInsideInput = this.items.some((item:any) => {
+      const inputElement = document.getElementById(`nested-input-${item.id}`);
+      return inputElement && inputElement.contains(event.target as Node);
+    });
+
+    // Recursively check nested items
+    const clickedInsideNestedInput = this.items.some((item:any) => {
+      return this.checkNestedInputs(item, event.target as Node);
+    });
+
+    // Close all nested inputs if click is outside both the example box and nested input
+    if (!clickedInsideExampleBox && !clickedInsideInput && !clickedInsideNestedInput) {
+      this.resetNestedInputs(this.items);
+    }
+  }
+
+  // Recursive function to check for nested inputs
+  checkNestedInputs(item: any, target: Node): boolean {
+    const inputElement = document.getElementById(`nested-input-${item.id}`);
+    if (inputElement && inputElement.contains(target)) {
+      return true;
+    }
+    // Check child collections recursively
+    if (item.childCollections && item.childCollections.length > 0) {
+      return item.childCollections.some((child: any) => this.checkNestedInputs(child, target));
+    }
+    return false;
   }
 }
