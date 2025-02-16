@@ -36,10 +36,7 @@ const routes: Routes = [
         path: 'footer',
         component: FooterComponent 
       },
-      {
-        path: 'app',
-        component: ApplicationComponent 
-      },
+   
       
 
     ]
@@ -60,7 +57,10 @@ const routes: Routes = [
         path: 'verify-email',
         component: VerifyEmailComponent 
       },
-      
+      {
+        path: 'app',
+        component: ApplicationComponent 
+      },
     ]
   }
 

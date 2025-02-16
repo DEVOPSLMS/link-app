@@ -1,37 +1,66 @@
+body{
+  font-size: 1rem;
+}
 .container{
   display:grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 15% 85%;
+  
+}
+.left-container{
+  border-right:0.1rem solid lightgray;
+  height:46rem;
 }
 .icon-list{
-  margin-left:16rem;
+
+  width:100%;
+ 
+}
+.icon-list span{
   cursor: pointer;
+  float:right;
 }
 .menu {
-    width: 20rem;
+    width:100%;
 
-    min-height: 60px;
+    min-height: 4rem;
     display: block;
 
     border-radius: 4px;
     overflow: hidden;
-    
+   
   }
-  .container{
-    margin-left:1rem;
-  }
+ 
   .example-box {
     padding:1rem;
     
     color: rgba(0, 0, 0, 0.87);
     display: flex;
-    flex-direction: row;
-
+    min-width: 0;
+    align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    
+    position: relative;
     background: white;
-    font-size: 1.2rem;
-  
+    line-height: 1.5rem;
+   
+  }
+
+  .example-box p{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Adds space between the chevron and text */
+    flex-grow: 1; /* Allows the text to take up remaining space */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .more{
+    display:none;
+    margin-left: auto;
+    cursor: pointer;
+    flex-shrink: 0;
+
   }
   .example-box span{
     cursor:pointer;
@@ -43,6 +72,12 @@
   .example-box:hover{
     background-color: #e2e2e2ef;
     cursor: pointer;
+  }
+  .active{
+    background-color: #e2e2e2ef;
+  }
+  .example-box:hover .more{
+    display:block;
   }
   .cdk-drag-preview {
     border: none;
@@ -69,20 +104,12 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
 
-  .more:hover{
-    cursor: pointer;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    background-color: #ededed;
-}
+
 .example-menu {
     display: inline-flex;
     flex-direction: column;
-    min-width: 180px;
-    max-width: 280px;
+    min-width: 9.375rem;
+    max-width: 17.5rem;
     background-color: rgba(255, 255, 255);
     padding: 6px 0;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
@@ -95,7 +122,6 @@
     background-color: transparent;
     cursor: pointer;
     border: none;
-    font-size: 1.2rem;
     user-select: none;
     min-width: 64px;
     line-height: 36px;
@@ -137,10 +163,7 @@
   .addCollection:focus{
     outline:none;
   }
-  button{
-    background-color: white;
-    color:red;
-  }
+
   .tree-invinsible{
     display:none;
 }
@@ -153,11 +176,31 @@
 .arrow {
   transition: transform 0.2s;
   cursor: pointer;
+  line-height: 1.5rem;
   
   &.rotated {
     transform: rotate(90deg);
   }
 }
-.child-collections{
-  margin-left:1rem;
+
+.right-container{
+  width:100%;
+
+}
+
+.top-layout{
+align-items: center;
+  height:5rem;
+  padding:0.5rem;
+  display:flex;
+  border-bottom: 0.1rem solid lightgray;
+}
+.top-layout .collection-name{
+  font-size: 1.5rem;
+}
+.add{
+  color:white;
+}
+.add-button{
+  margin-left:auto;
 }

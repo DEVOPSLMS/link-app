@@ -11,37 +11,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './footer.component.css'
 })
 
-export class FooterComponent implements OnInit {
-  public vehicle= new ArrayDataSource([
-    {
-      name:'Cars',
-      children:[
-        {
-          name:'BMW'
-        },
-        {
-          name:'Land Rover'
-        }
-      ]
-    },
-    {
-      name:'Motor',
-      children:[
-        {
-          name:'BMW'
-        },
-        {
-          name:'Land Rover'
-        }
-      ]
-    }
-    
+export class FooterComponent  {
 
-  ]);
-  treeControl= new NestedTreeControl((node:any)=>node.children);
-  hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
-  ngOnInit(): void {
-    
-  }
+ 
 }
 

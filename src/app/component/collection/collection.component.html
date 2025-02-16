@@ -1,63 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
-
-</head>
-
 <body>
   <div class="container">
     <div class="left-container">
       <div class="icon-list">
-        <span class="material-symbols-outlined">
-          add
-        </span>
+
         <span class="material-symbols-outlined">
           delete
         </span>
+        <span class="material-symbols-outlined">
+          add
+        </span>
       </div>
-<ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: items ,level: 0}"></ng-container>
+      <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: items ,level: 0}"></ng-container>
       <ng-template #recursiveList let-items let-level="level">
         <div cdkDropList class="menu" (cdkDropListDropped)="drop($event)">
           @for (item of items; track item; let i = $index) {
-          <div class="collection-container" [ngStyle]="{ 'margin-left': (level * 1) + 'rem' }">
+          <div class="collection-container">
             <!-- Parent Collection -->
-            <div class="example-box" cdkDrag (click)="consoleLog(item.id)">
-              <p>
+            <div class="example-box" #exampleBox cdkDrag [id]="'item-' + item.id" (click)="toggleRightContainer(item)"
+              [ngClass]="{ 'active': activeItemId==item.id }">
+              <p [ngStyle]="{ 'margin-left': (level * 1) + 'rem' }">
                 <span *ngIf="item.childCollections && item.childCollections.length > 0"
                   class="material-symbols-outlined arrow" (click)="toggleChildren(item)"
                   [class.rotated]="item.showChildren">
                   chevron_right
                 </span>
+
                 {{item.collectionName}}
               </p>
-              <a class="more" [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
+              <a [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
                 more_horiz
               </a>
             </div>
-            <form action=""[formGroup]="addCollectionForm">
-              <div *ngIf="item.showNestedInput" class="nested-input-container">
-                <input type="text" placeholder="Nested collection name" [(ngModel)]="item.newNestedName"formControlName="name"
-                  (keyup.enter)="addNestedCollection(item)" class="addCollection" autofocus>
+
+            <form action="" [formGroup]="addCollectionForm">
+              <div *ngIf="item.showNestedInput" class="nested-input-container"
+                [ngStyle]="{ 'margin-left': (level * 1) + 'rem' }" [id]="'nested-input-' + item.id">
+                <input type="text" placeholder="Nested collection name" [(ngModel)]="item.newNestedName"
+                  formControlName="name" (keyup.enter)="addNestedCollection(item)" class="addCollection" autofocus>
               </div>
             </form>
-            
+
             <ng-container *ngIf="item.showChildren && item.childCollections?.length">
               <ng-container
                 *ngTemplateOutlet="recursiveList; context: { $implicit: item.childCollections,level:level+1 }"></ng-container>
             </ng-container>
-            <!-- Nested Input -->
-      
-  
-            <!-- Child Collections -->
-        
-           
             <ng-template #menu>
               <div class="example-menu" cdkMenu>
-                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput(item)">Add nested collection</a>
+                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add nested
+                  collection</a>
                 <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
                 <a class="example-menu-item" cdkMenuItem>View collection details</a>
                 <a class="example-menu-item" cdkMenuItem>Delete collection</a>
@@ -66,17 +56,19 @@
           </div>
           }
         </div>
-     
-           
-
-         
-        
       </ng-template>
-    
-
     </div>
-    <div class="right-container">
-      
+    <div class="right-container" *ngIf="userClicked==true">
+      <div class="top-layout">
+        <div class="collection-name">
+          <p>{{collectionName}}</p>
+        </div>
+        <button class="add-button"> <span class="material-symbols-outlined add">add</span></button>
+      </div>
+      <div class="links-container">
+        <p>Hello</p>
+      </div>
+
     </div>
 
   </div>
@@ -84,5 +76,3 @@
 
 
 </body>
-
-</html>

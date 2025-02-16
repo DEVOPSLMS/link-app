@@ -1,0 +1,128 @@
+.container{
+    background-color: #f0f0f0;
+    width: 100vw;
+    height:100vh;
+    overflow-x: hidden;
+}
+.card{
+    background-color: #fff;
+    border: 0.1rem solid lightgray;
+    height:50rem;
+    margin: 3.4rem;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 4rem;
+    border-bottom:0.1rem solid lightgray;
+}
+.card .navbar {
+    padding:1rem;
+}
+.card .navbar .navbar-ul .logo{
+    position: absolute;
+    left: 2rem;
+    margin-top: 0.5rem;
+}
+.card .navbar-ul{
+    display:flex;
+    list-style-type: none;
+
+}
+.input {
+    width: clamp(40rem, 100%, 120rem);
+    height: 2rem;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+    font-size:1rem;
+    -webkit-transition: .3s ease;
+    -moz-transition: .3s ease;
+    -ms-transition: .3s ease;
+    -o-transition: .3s ease;
+}
+   .input::placeholder {
+    color: #9e9ea7;
+   }
+   .input:focus, input:hover {
+    outline: none;
+    border-color: rgba(82, 137, 255, 0.4);
+    background-color: #fff;
+   }
+   .icon {
+    position: absolute;
+    
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.45rem;
+    margin-left:1rem;
+   }
+.content{
+    display:flex;
+    flex-wrap: wrap;
+   
+}
+.left-content{
+    flex:12%;
+    border-right:0.1rem solid lightgray;
+    height:46rem;
+    padding: 2rem;
+}
+.left-content .side-nav .header{
+    font-size: 1rem;
+    padding:0.7rem 0;
+    position:relative;
+    display: block;
+}
+.side-nav{
+    display: flex;
+    flex-direction: column;
+   gap: 1rem;
+   margin-top: 1rem;
+}
+.side-nav{
+    list-style-type: none;
+}
+.left-content .side-nav li a{
+    color:#080238;
+}
+
+.left-content .side-nav li .url:hover{
+    color:rgb(0, 77, 243);
+    cursor: pointer;
+}
+.left-content .side-nav li .url:focus span{
+    background-color: rgb(0, 77, 243);
+    color:white;
+}
+.left-content .side-nav a span{
+    font-size: 1.5rem;
+}
+
+.right-content{
+    flex:88%;
+}
+
+.side-nav .header:not(:first-child)::before {
+    border-top: 0.1px solid lightgray;
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
+    position: absolute;
+    content: "";
+    width: calc(100% + 4rem);
+    left: -2rem;
+    top:-0.5rem;
+}

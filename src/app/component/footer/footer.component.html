@@ -6,23 +6,44 @@
     <title>Document</title>
 </head>
 <body>
-    <cdk-tree [dataSource]="vehicle"[treeControl]="treeControl">
-        <cdk-nested-tree-node *cdkTreeNodeDef="let node"class="tree-node">
-            <button disabled>{{node.name}}</button>
-        </cdk-nested-tree-node>
-        <cdk-nested-tree-node *cdkTreeNodeDef="let node;when: hasChild"class="tree-node">
-            <button cdkTreeNodeToggle>
-                <span class="material-symbols-outlined">
-                    {{treeControl.isExpanded(node)?'stat_minus_1':'chevron_right'}}
-                    </span>
-            </button>
-            {{node.name}}
-            <div [class.tree-invinsible]="!treeControl.isExpanded(node)">
-                <ng-container cdkTreeNodeOutlet>
-                    
-                </ng-container>
+    <header class="main-header">
+        <h1>Link Library</h1>
+        <nav class="primary-nav">
+            <a href="/collections">Collections</a>
+            <a href="/tags">Tags</a>
+            <div class="search-box">
+                <input type="text" placeholder="Search links...">
             </div>
-        </cdk-nested-tree-node>
-    </cdk-tree>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <aside class="sidebar">
+            <h3>Categories</h3>
+            <!-- Category filters -->
+        </aside>
+
+        <div class="main-content">
+            <div class="link-grid">
+                <!-- Link cards go here -->
+                <article class="link-card">
+                    <div class="link-meta">
+                        <span class="domain">example.com</span>
+                        <time>3 days ago</time>
+                    </div>
+                    <h2><a href="#">Example Link Title</a></h2>
+                    <p class="description">Link description text goes here...</p>
+                    <div class="link-actions">
+                        <button>Edit</button>
+                        <button>Archive</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <!-- Footer content -->
+    </footer>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-application',
@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './application.component.css'
 })
 export class ApplicationComponent {
-
+  userClicked=false;
+  click(){
+    this.userClicked=true;
+  }
 }
