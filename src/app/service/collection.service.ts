@@ -21,8 +21,9 @@ export class CollectionService {
 
   )
  }
- addCollection(collectionName:string,parentCollectionId:string){
-  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,parentCollectionId},{withCredentials:true}).pipe(
+ addCollection(collectionName:string){
+  var created=new Date();  
+  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,created},{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })
