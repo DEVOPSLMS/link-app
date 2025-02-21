@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, EMPTY, tap } from 'rxjs';
+import { catchError, EMPTY, Observable, tap } from 'rxjs';
+import { CollectionModel, CollectionResponse, deleteCollection, editCollection } from '../Models/collection_model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { catchError, EMPTY, tap } from 'rxjs';
 export class CollectionService {
   private http = inject(HttpClient);
   
-  private apiUrl = "https://localhost:44398/api";
+  private apiUrl = "https://localhost:7174/api";
   constructor() { }
  getCollection(){
   return this.http.get(this.apiUrl+"/link/collection-by-user",{withCredentials:true}).pipe(
@@ -21,9 +22,33 @@ export class CollectionService {
 
   )
  }
- addCollection(collectionName:string){
-  var created=new Date();  
-  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,created},{withCredentials:true}).pipe(
+ addCollection(collectionName:string):Observable<CollectionResponse>{
+  const collection:CollectionModel={
+    collectionName,
+    created: new Date()
+  };
+
+  return this.http.post<CollectionResponse>(this.apiUrl+"/link/collection-add",{collection},{withCredentials:true}).pipe(
+    tap((response:any)=>{
+      console.log(response);
+    })
+  )
+ }
+ deleteCollection(id:string):Observable<any>{
+
+  return this.http.delete(this.apiUrl+"/link/delete-collection/"+id,{withCredentials:true}).pipe(
+    tap((response:any)=>{
+      console.log(response);
+    })
+  )
+ }
+ editCollection(collectionName:string,id:string):Observable<CollectionResponse>{
+  const collection:editCollection={
+    collectionName,
+
+  };
+
+  return this.http.put<CollectionResponse>(this.apiUrl+"/link/update-collection/"+id,collection,{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })

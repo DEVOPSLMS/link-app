@@ -1,0 +1,16 @@
+<body>
+    <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+    <div class="modal" *ngIf="isVisible">
+        <div class="modal-content">
+            <h2 class="collection">View Collection</h2>
+            <div class="input-field">
+                <p>Collection Name: {{ collectionName }}</p>
+                <p>Total number of links in collection: {{this.length}}</p>
+               <p>Created on: {{createdDate}}</p>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>

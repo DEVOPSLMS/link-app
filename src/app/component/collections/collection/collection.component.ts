@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CollectionService } from '../../service/collection.service';
+import { CollectionService } from '../../../service/collection.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -35,7 +35,10 @@ export class CollectionComponent implements OnInit,OnDestroy{
   }
   // This method gets the collection of the user based on Id
   ngOnInit(): void {
-   this.subscription= this.collectionService.getCollection().pipe(takeUntil(this.destroy$))
+this.loadCollections();
+  }
+  loadCollections(){
+    this.subscription= this.collectionService.getCollection().pipe(takeUntil(this.destroy$))
     .subscribe({
       next:(response)=>{
         this.items=response;
@@ -155,5 +158,17 @@ export class CollectionComponent implements OnInit,OnDestroy{
       return item.childCollections.some((child: any) => this.checkNestedInputs(child, target));
     }
     return false;
+  }
+  onCollectionAdded(newCollection: any): void {
+    this.items.push(newCollection);
+  }
+  onCollectionRemoved(collectionId: string): void {
+    this.items = this.items.filter((item:any) => item.id !== collectionId);
+  }
+  onCollectionEdited(editedCollection: any): void {
+    const index = this.items.findIndex((item:any) => item.id === editedCollection.id);
+    if (index !== -1) {
+      this.items[index] = editedCollection;
+    }
   }
 }
