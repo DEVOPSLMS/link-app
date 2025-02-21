@@ -3,13 +3,14 @@
     <div class="left-container">
       <div class="icon-list">
 
-      
-        <span class="material-symbols-outlined">
+        <app-add-collection-modal #addCollectionModal (collectionAdded)="onCollectionAdded($event)"></app-add-collection-modal>
+        <app-delete-collection-modal #deleteCollectionModal (collectionRemoved)="onCollectionRemoved($event)"></app-delete-collection-modal>
+        <app-edit-collection-modal #editCollectionModal (collectionEdited)="onCollectionEdited($event)"></app-edit-collection-modal>
+        <app-view-collection-modal #viewCollectionModal ></app-view-collection-modal>
+        <span class="material-symbols-outlined"(click)="addCollectionModal.openModal()">
           add
         </span>
-        <span class="material-symbols-outlined">
-          delete
-        </span>
+     
       </div>
       
     
@@ -39,11 +40,11 @@
               
             <ng-template #menu>
               <div class="example-menu" cdkMenu>
-                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
-                  </a>
-                <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
-                <a class="example-menu-item" cdkMenuItem>View collection details</a>
-                <a class="example-menu-item" cdkMenuItem>Delete collection</a>
+                <!-- <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
+                  </a> -->
+                  <a class="example-menu-item" (click)="viewCollectionModal.openModal(item)"cdkMenuItem>View collection details</a>
+                  <a class="example-menu-item"(click)="editCollectionModal.openModal(item)" cdkMenuItem>Edit collection Name</a>
+                <a class="example-menu-item" (click)="deleteCollectionModal.openModal(item)"cdkMenuItem>Delete collection</a>
               </div>
             </ng-template>
           </div>

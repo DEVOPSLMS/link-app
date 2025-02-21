@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, EMPTY, map, Observable, take, tap, throwError } from 'rxjs';
 import { EncryptionService } from './encryption.service';
-
+import { LoginModel, LoginResponse } from '../Models/login_model';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = "https://localhost:44398/api";
+  private apiUrl = "https://localhost:7174/api";
   private refreshTokenSubject = new BehaviorSubject<string>('');
   refreshToken$ = this.refreshTokenSubject.asObservable();
   private email = new BehaviorSubject<string>(''); // Default value
@@ -69,9 +69,9 @@ export class AuthService {
       })
     )
   }
-  login(credentials: { email: string, password: string }): Observable<any> {
+  login(credentials: LoginModel): Observable<LoginResponse> {
     
-    return this.http.post(this.apiUrl + '/login', credentials, { withCredentials: true }).pipe(
+    return this.http.post<LoginResponse>(this.apiUrl + '/login', credentials, { withCredentials: true }).pipe(
       
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unknown error occurred.';
@@ -95,11 +95,7 @@ export class AuthService {
         
       }),
       tap((response: any) => {
-        console.log(response)
-      
-       
         setTimeout(()=>{
-          
           this.isLoggedinSubject.next(true);
         },2000);
       }),
@@ -146,9 +142,7 @@ export class AuthService {
   verifyUser(){
     return this.http.post(this.apiUrl+'/check-user',{},{withCredentials:true,responseType:'text'}).pipe(
       catchError(error=> EMPTY),
-      tap((response:any)=>{
-        console.log(response);
-      })
+      tap((response:any)=>{      })
     )
   }
 }

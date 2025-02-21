@@ -1,0 +1,20 @@
+<body>
+    <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+    <div class="modal" *ngIf="isVisible">
+        <div class="modal-content">
+            <h2 class="collection">Add Collection</h2>
+            <div class="input-field">
+                <form action="" [formGroup]="addForm" autocomplete="off">
+                    <div class="collection-input">
+                        <input type="text" class="input-field-modal" autocomplete="off webauthn"
+                        formControlName="name" placeholder="Collection Name"required (keyup.enter)="addCollection()">
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</body>

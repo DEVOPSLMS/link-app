@@ -5,11 +5,11 @@
     width: 100vw;
     height:100vh;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 .card{
     background-color: #fff;
-    border: 0.1px solid lightgray;
-    height:50rem;
+    height:100%;
 }
 .navbar {
     display: flex;
@@ -117,9 +117,9 @@
    
 }
 .left-content{
-    flex:12%;
+    flex:10%;
     border-right:0.1px solid lightgray;
-    height:46rem;
+    height:100vh;
     padding: 2rem;
     font-size:0.8rem;
 }
@@ -154,7 +154,7 @@
 }
 
 .right-content{
-    flex:88%;
+    flex:90%;
 }
 
 .side-nav .header:not(:first-child)::before {

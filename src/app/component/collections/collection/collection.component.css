@@ -3,12 +3,12 @@ body{
 }
 .container{
   display:grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 10% 90%;
   
 }
 .left-container{
-  border-right:0.1rem solid lightgray;
-  height:46rem;
+  border-right:0.1px solid lightgray;
+  height:100vh;
 }
 .icon-list{
   display:flex;
