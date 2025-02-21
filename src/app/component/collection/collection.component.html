@@ -3,28 +3,24 @@
     <div class="left-container">
       <div class="icon-list">
 
-        <span class="material-symbols-outlined">
-          delete
-        </span>
+      
         <span class="material-symbols-outlined">
           add
         </span>
+        <span class="material-symbols-outlined">
+          delete
+        </span>
       </div>
-      <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: items ,level: 0}"></ng-container>
-      <ng-template #recursiveList let-items let-level="level">
+      
+    
         <div cdkDropList class="menu" (cdkDropListDropped)="drop($event)">
-          @for (item of items; track item; let i = $index) {
+          <div *ngFor="let item of items; let i = index; trackBy: trackByFn">
+       
           <div class="collection-container">
             <!-- Parent Collection -->
             <div class="example-box" #exampleBox cdkDrag [id]="'item-' + item.id" (click)="toggleRightContainer(item)"
               [ngClass]="{ 'active': activeItemId==item.id }">
-              <p [ngStyle]="{ 'margin-left': (level * 1) + 'rem' }">
-                <span *ngIf="item.childCollections && item.childCollections.length > 0"
-                  class="material-symbols-outlined arrow" (click)="toggleChildren(item)"
-                  [class.rotated]="item.showChildren">
-                  chevron_right
-                </span>
-
+              <p>
                 {{item.collectionName}}
               </p>
               <a [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
@@ -34,29 +30,28 @@
 
             <form action="" [formGroup]="addCollectionForm">
               <div *ngIf="item.showNestedInput" class="nested-input-container"
-                [ngStyle]="{ 'margin-left': (level * 1) + 'rem' }" [id]="'nested-input-' + item.id">
-                <input type="text" placeholder="Nested collection name" [(ngModel)]="item.newNestedName"
+               [id]="'nested-input-' + item.id">
+                <input type="text" placeholder="Add collection" [(ngModel)]="item.newNestedName"
                   formControlName="name" (keyup.enter)="addNestedCollection(item)" class="addCollection" autofocus>
               </div>
             </form>
 
-            <ng-container *ngIf="item.showChildren && item.childCollections?.length">
-              <ng-container
-                *ngTemplateOutlet="recursiveList; context: { $implicit: item.childCollections,level:level+1 }"></ng-container>
-            </ng-container>
+              
             <ng-template #menu>
               <div class="example-menu" cdkMenu>
-                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add nested
-                  collection</a>
+                <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
+                  </a>
                 <a class="example-menu-item" cdkMenuItem>Edit collection Name</a>
                 <a class="example-menu-item" cdkMenuItem>View collection details</a>
                 <a class="example-menu-item" cdkMenuItem>Delete collection</a>
               </div>
             </ng-template>
           </div>
-          }
+          </div>
+          
         </div>
-      </ng-template>
+      
+     
     </div>
     <div class="right-container" *ngIf="userClicked==true">
       <div class="top-layout">
@@ -72,7 +67,4 @@
     </div>
 
   </div>
-
-
-
 </body>

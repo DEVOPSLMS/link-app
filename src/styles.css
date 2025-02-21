@@ -11,7 +11,8 @@
 body{
     font-size: 1.2rem;
     font-family: "Outfit", serif;
-    font-style: #0a1515;
+    font-style: lightgray;
+
 }
 button{
     background-color: black;

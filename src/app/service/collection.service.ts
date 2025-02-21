@@ -8,7 +8,7 @@ import { catchError, EMPTY, tap } from 'rxjs';
 export class CollectionService {
   private http = inject(HttpClient);
   
-  private apiUrl = "https://localhost:7174/api";
+  private apiUrl = "https://localhost:44398/api";
   constructor() { }
  getCollection(){
   return this.http.get(this.apiUrl+"/link/collection-by-user",{withCredentials:true}).pipe(
@@ -21,8 +21,9 @@ export class CollectionService {
 
   )
  }
- addCollection(collectionName:string,parentCollectionId:string){
-  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,parentCollectionId},{withCredentials:true}).pipe(
+ addCollection(collectionName:string){
+  var created=new Date();  
+  return this.http.post(this.apiUrl+"/link/collection-add",{collectionName,created},{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })

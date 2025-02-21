@@ -39,12 +39,16 @@ export class CollectionComponent implements OnInit,OnDestroy{
     .subscribe({
       next:(response)=>{
         this.items=response;
+        console.log("collections",this.items);
       },
       error:(err)=>{
         console.log("Error fetching collections",err);
       }
     })
     this.loadItems();
+  }
+  trackByFn(index: number, item: any): number {
+    return item.id; // or any unique identifier
   }
   drop(event: CdkDragDrop<string[]>) {
     const data= this.items.data;
@@ -78,22 +82,19 @@ export class CollectionComponent implements OnInit,OnDestroy{
       }
     });
   }
-  addNestedCollection(parentItem: any) {
-    this.collectionService.addCollection(this.addCollectionForm.get('name')?.value,parentItem.id).subscribe({
+  addNestedCollection(item:any) {
+    this.collectionService.addCollection(this.addCollectionForm.get('name')?.value).subscribe({
       next:(response:any)=>{
         const newCollection = response;
 
         // Initialize properties if necessary
         newCollection.childCollections = [];
-        newCollection.showChildren = false;
         newCollection.showNestedInput = false;
 
         // Add the new collection to the parent item's childCollections array
-        if (!parentItem.childCollections) {
-            parentItem.childCollections = [];
-        }
-        parentItem.childCollections.push(newCollection);
-        parentItem.showNestedInput=false;
+        item.showNestedInput = !item.showNestedInput;
+        item.newNestedName = ''; // Reset input value
+        this.items.push(newCollection);
         // Optionally, clear the form input
         this.addCollectionForm.reset();
       },

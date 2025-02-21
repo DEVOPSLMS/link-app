@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
+
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, catchError, EMPTY, map, Observable, take, tap, throwError } from 'rxjs';
 import { EncryptionService } from './encryption.service';
@@ -11,7 +11,7 @@ import { EncryptionService } from './encryption.service';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = "https://localhost:7174/api";
+  private apiUrl = "https://localhost:44398/api";
   private refreshTokenSubject = new BehaviorSubject<string>('');
   refreshToken$ = this.refreshTokenSubject.asObservable();
   private email = new BehaviorSubject<string>(''); // Default value

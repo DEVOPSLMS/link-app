@@ -30,6 +30,7 @@ form{
     margin-left: 1rem;
     font-size: 1.2rem;
 }
+
 input{
     height:2.5rem;
     width:20rem;
@@ -76,10 +77,14 @@ input:focus{
     color:red;
     cursor: pointer;
 }
+.password-input{
+    position:relative;
+    width:60%;
+}
 .toggle-button {
-    position: absolute;
-    left:73rem;
-    margin-top: 0.5rem;
+    position:absolute;
+    right:-2rem;
+    top:0.5rem;
     padding:0;
     background: none;
     border: none;
