@@ -1,0 +1,41 @@
+<body>
+    <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+    <div class="modal" *ngIf="isVisible">
+      <div class="modal-content">
+        <h2 class="collection">Edit link</h2>
+        <div class="input-field">
+          <form action="" [formGroup]="editForm" autocomplete="off" >
+            <div class="collection-input">
+                <input
+                type="text"
+                class="input-field-modal"
+                autocomplete="off webauthn"
+                formControlName="url"
+                required
+              />
+              <input
+              type="text"
+              class="input-field-modal"
+              autocomplete="off webauthn"
+              formControlName="tagInput"
+              (keydown)="addTag($event)"
+              placeholder="Add a tag and press Enter"
+            />
+              <div class="tags-container">
+                <span *ngFor="let tag of tags; let i = index" class="tag">
+                  {{ tag }}
+                  <span class="material-symbols-outlined remove-tag" (click)="removeTag(i)">close</span>
+                </span>
+           
+              </div>
+             
+            </div>
+          </form>
+        </div>
+        <div class="button-bottom">
+          <button class="cancel" (click)="closeModal()">Cancel</button>
+          <button class="save" type="submit"(click)="editLink()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </body>

@@ -6,11 +6,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { animate, style, transition, trigger } from '@angular/animations';
+
+
 takeUntil
 @Component({
   selector: 'app-collection',
   standalone: false,
-
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [ // Fade in
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [ // Fade out
+        animate('300ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ],
   templateUrl: './collection.component.html',
   styleUrl: './collection.component.css'
 })
@@ -25,8 +38,12 @@ export class CollectionComponent implements OnInit,OnDestroy{
   activeItemId: number | null = null;
   userClicked:any;
   collectionName:any;
+  collectionId:string='';
+  private timeoutId: any;
   private subscription:Subscription;
   private destroy$ = new Subject<void>();
+  popup: boolean=false;
+  
   constructor(private collectionService:CollectionService){
     this.addCollectionForm = this.fb.group({
           name: ['', [Validators.required]],
@@ -35,6 +52,7 @@ export class CollectionComponent implements OnInit,OnDestroy{
   }
   // This method gets the collection of the user based on Id
   ngOnInit(): void {
+   
 this.loadCollections();
   }
   loadCollections(){
@@ -43,6 +61,7 @@ this.loadCollections();
       next:(response)=>{
         this.items=response;
         console.log("collections",this.items);
+
       },
       error:(err)=>{
         console.log("Error fetching collections",err);
@@ -50,14 +69,11 @@ this.loadCollections();
     })
     this.loadItems();
   }
+
   trackByFn(index: number, item: any): number {
     return item.id; // or any unique identifier
   }
-  drop(event: CdkDragDrop<string[]>) {
-    const data= this.items.data;
-    moveItemInArray(this.items, event.previousIndex, event.currentIndex);
-    this.saveItems();
-  }
+
   saveItems() {
     localStorage.setItem('items', JSON.stringify(this.items));
   }
@@ -70,6 +86,7 @@ this.loadCollections();
   toggleChildren(item: any) {
     item.showChildren = !item.showChildren;
   }
+  
   toggleNestedInput(event: MouseEvent,targetItem: any) {
     event.stopPropagation(); 
     this.resetNestedInputs(this.items);
@@ -111,6 +128,7 @@ this.loadCollections();
       this.activeItemId = item.id; // Set the clicked item as active
       this.userClicked=true;
       this.collectionName=item.collectionName;
+      this.collectionId=item.id;
     }
   }
   ngOnDestroy() {
@@ -170,5 +188,38 @@ this.loadCollections();
     if (index !== -1) {
       this.items[index] = editedCollection;
     }
+  }
+  onLinkEdit(editedLink: any): void {
+    const collection = this.items.find((item: any) => item.id === this.collectionId);
+    if (collection) {
+      const linkIndex = collection.links.findIndex((link: any) => link.id === editedLink.id);
+      if (linkIndex !== -1) {
+        collection.links[linkIndex] = editedLink;
+      }
+    }
+  }
+  onLinkAdded(newLink: any): void {
+    const collection = this.items.find((item:any) => item.id === this.collectionId);
+    console.log(collection)
+    if (collection) {
+      collection.links.push(newLink);
+    }
+  }
+  onLinkRemoved(deleteLinkId: any): void {
+    console.log(this.collectionId)
+    const collection = this.items.find((item:any) => item.id === this.collectionId);
+    console.log(collection)
+    if(collection){
+      collection.links= collection.links.filter((item:any) => item.id !== deleteLinkId);
+    }
+
+  
+  }
+  showPopup(){
+    this.popup=true;
+    clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(() => {
+     this.popup = false;
+    }, 3000);
   }
 }

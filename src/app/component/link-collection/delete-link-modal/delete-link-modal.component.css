@@ -13,20 +13,14 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    backdrop-filter: blur(10px);
     transform: translate(-50%, -50%);
     background: white;
-    padding: 2rem;
+    padding: 20px;
     border-radius: 8px;
     z-index: 2;
     width: 30rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    -webkit-border-radius: 0.5rem;
-    -moz-border-radius: 0.5rem;
-    -ms-border-radius: 0.5rem;
-    -o-border-radius: 0.5rem;
-}
+  }
   
   .modal-content p {
     margin-top: 2rem;
@@ -42,23 +36,22 @@
     text-align: center;
     font-size: 1.5rem;
   }
-  
-  
-  
-  .input-field {
-    display: flex;
-    flex-direction: column;
-  
+
+  .button-group{
+    margin-top: 2rem;
+    float:right;
   }
-  
-  .input-field {
-   text-align: center;
+  .button-group button{
+    border:none;
   }
+  .button-group .cancel{
+    background-color: white;
+    color:black;
+  }
+  .button-group .cancel:hover{
+    background-color: lightgray;
+  }
+  .button-group .delete{
 
-
-  
-  
- 
-
-
-  
+    background-color: #ff3838;
+  }

@@ -1,6 +1,5 @@
 export interface CollectionModel{
     collectionName:string;
-    created:Date;
 }
 export interface CollectionResponse{
     id:string;
@@ -8,7 +7,7 @@ export interface CollectionResponse{
     userId:string;
     links:[];
     created:Date;
-  
+    isPublic:boolean;
 }
 export interface deleteCollection{
     id:string;

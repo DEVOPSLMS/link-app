@@ -1,0 +1,42 @@
+<body>
+    <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+    <div class="modal" *ngIf="isVisible">
+        <div class="modal-content">
+            <h2 class="collection">Add Link</h2>
+            <div class="input-field">
+                <form action="" [formGroup]="addForm" autocomplete="off">
+                    <div class="collection-input">
+                        <div class="input-name">
+                            <label for="Url">Website Url</label>
+                        </div>
+                        <input type="text" class="input-field-modal" autocomplete="off webauthn"
+                        formControlName="url" placeholder="https://www.example.com"required >
+                        <div class="input-name" style="margin-top:0.5rem;">
+                            <label for="Tags">Tags</label>
+                        </div>
+                        <input type="text" class="input-field-modal" autocomplete="off webauthn"
+                        formControlName="tags" placeholder="Anime,etc,etc"required (keydown)="handleTagInput($event)">
+                        <div class="tags">
+                            <span *ngFor="let tag of tags; let i = index" class="tag">
+                              {{ tag }}
+                              <button type="button" (click)="removeTag(i)"><span class="material-symbols-outlined">
+                                close
+                                </span></button>
+                            </span>
+                          </div>
+                       
+                    </div>
+                    <div class="button-group">
+                        <button class="cancel" (click)="closeModal()">Cancel</button>
+                        <button class="add" (click)="addLink()">Add Url</button>
+                    </div>
+                </form>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</body>

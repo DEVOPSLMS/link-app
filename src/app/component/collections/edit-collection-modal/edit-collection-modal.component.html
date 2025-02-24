@@ -7,12 +7,16 @@
                 <form action="" [formGroup]="editForm" autocomplete="off">
                     <div class="collection-input">
                         <input type="text" class="input-field-modal" autocomplete="off webauthn"
-                        formControlName="name" required (keyup.enter)="editCollection()">
+                        formControlName="name" required >
                     </div>
                 </form>
 
             </div>
-
+            <div class="button-bottom">
+                    
+                    <button class="cancel">Cancel</button>
+                    <button class="save"(click)="editCollection()">Save Changes</button>
+            </div>
 
         </div>
     </div>
