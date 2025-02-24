@@ -50,6 +50,7 @@ export class LoginModalComponent {
             this.closeModal();
             this.loginForm.reset();
             this.errorMessage='';
+            this.router.navigate(['/app']);
           }, 2000);
         },
         error:(error)=>{

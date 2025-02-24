@@ -2,14 +2,14 @@
     <div class="modal-overlay" *ngIf="isVisible" (click)="closeModal()"></div>
     <div class="modal" *ngIf="isVisible">
         <div class="modal-content">
-            <h2 class="collection">Delete collection</h2>
+            <h2 class="collection">Delete Link</h2>
             <div class="input-field">
-               <p>Are you sure you want to delete {{collectionName}}?</p>
+               <p>Are you sure you want to delete this link? This cannot be undone.</p>
            
             </div>
             <div class="button-group">
                 <button class="cancel" (click)="closeModal()">Cancel</button>
-                <button class="delete"(click)="deleteCollection()">Delete {{collectionName}}</button>
+                <button class="delete"(click)="deleteLink()">Delete</button>
             </div>
 
         </div>

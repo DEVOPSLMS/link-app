@@ -28,7 +28,11 @@ import { DeleteCollectionModalComponent } from './component/collections/delete-c
 import { EditCollectionModalComponent } from './component/collections/edit-collection-modal/edit-collection-modal.component';
 import { ViewCollectionModalComponent } from './component/collections/view-collection-modal/view-collection-modal.component';
 import { DatePipe } from '@angular/common';
-
+import { AddLinkModalComponent } from './component/link-collection/add-link-modal/add-link-modal.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import { DeleteLinkModalComponent } from './component/link-collection/delete-link-modal/delete-link-modal.component';
+import { UpdateLinkModalComponent } from './component/link-collection/update-link-modal/update-link-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +51,9 @@ import { DatePipe } from '@angular/common';
     DeleteCollectionModalComponent,
     EditCollectionModalComponent,
     ViewCollectionModalComponent,
+    AddLinkModalComponent,
+    DeleteLinkModalComponent,
+    UpdateLinkModalComponent,
 
     
   ],
@@ -63,6 +70,8 @@ import { DatePipe } from '@angular/common';
     CdkMenuItem,
     CdkMenuTrigger,
     CdkTreeModule,
+    ScrollingModule,
+    ClipboardModule
 
   ],
 

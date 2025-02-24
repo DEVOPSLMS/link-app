@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
 import { CollectionModel, CollectionResponse, deleteCollection, editCollection } from '../Models/collection_model';
@@ -10,6 +10,7 @@ export class CollectionService {
   private http = inject(HttpClient);
   
   private apiUrl = "https://localhost:7174/api";
+  
   constructor() { }
  getCollection(){
   return this.http.get(this.apiUrl+"/link/collection-by-user",{withCredentials:true}).pipe(
@@ -25,10 +26,10 @@ export class CollectionService {
  addCollection(collectionName:string):Observable<CollectionResponse>{
   const collection:CollectionModel={
     collectionName,
-    created: new Date()
+    
   };
 
-  return this.http.post<CollectionResponse>(this.apiUrl+"/link/collection-add",{collection},{withCredentials:true}).pipe(
+  return this.http.post<CollectionResponse>(this.apiUrl+"/link/collection-add",collection,{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })
@@ -45,13 +46,18 @@ export class CollectionService {
  editCollection(collectionName:string,id:string):Observable<CollectionResponse>{
   const collection:editCollection={
     collectionName,
-
   };
-
   return this.http.put<CollectionResponse>(this.apiUrl+"/link/update-collection/"+id,collection,{withCredentials:true}).pipe(
     tap((response:any)=>{
       console.log(response);
     })
   )
  }
+ searchCollection(search:string):Observable<CollectionResponse>{
+  return this.http.post<CollectionResponse>(this.apiUrl+"/link/search", {search} ,{withCredentials:true}).pipe(
+    tap((response:any)=>{
+      console.log(response);
+    })
+  )
+ }  
 }

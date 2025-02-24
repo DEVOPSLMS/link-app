@@ -16,8 +16,8 @@ export class EditCollectionModalComponent {
   isVisible = false;
   constructor(private collectionService:CollectionService,private fb:FormBuilder){
     this.editForm = this.fb.group({
-      name: ['', [Validators.required]]
-      
+      name: ['', [Validators.required]],
+      isPublic:[false,[Validators.required]]
     });
   }
   

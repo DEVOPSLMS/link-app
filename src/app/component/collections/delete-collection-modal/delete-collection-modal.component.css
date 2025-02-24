@@ -42,11 +42,17 @@
   }
   .button-group{
     margin-top: 2rem;
-    text-align: center;
+    float:right;
   }
   .button-group button{
-    margin:0rem 2rem;
     border:none;
+  }
+  .button-group .cancel{
+    background-color: white;
+    color:black;
+  }
+  .button-group .cancel:hover{
+    background-color: lightgray;
   }
   .button-group .delete{
 
