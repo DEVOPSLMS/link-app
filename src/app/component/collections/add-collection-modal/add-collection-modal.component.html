@@ -7,7 +7,7 @@
                 <form action="" [formGroup]="addForm" autocomplete="off">
                     <div class="collection-input">
                         <input type="text" class="input-field-modal" autocomplete="off webauthn"
-                        formControlName="name" placeholder="Collection Name"required (keyup.enter)="addCollection()">
+                        formControlName="name" placeholder="Collection Name"required (keyup.enter)="addCollection()"autofocus>
                     </div>
                 </form>
 

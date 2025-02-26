@@ -1,107 +1,205 @@
-body{
-    width:100vw;
-    overflow-x: hidden;
+::-webkit-scrollbar {
+    width: 0.4rem;
+
 }
-.container{
-    margin-top:7%;
-    display: grid;
-    grid-template-columns: 60% 40%;
-}
-.card-right h1{
-    font-size: 1.5rem;
+  ::-webkit-scrollbar-track {
+    background: #2e2e2e; 
+    opacity: 0.5;
+    border-radius: 0.2rem;
+    -webkit-border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    -ms-border-radius: 0.2rem;
+    -o-border-radius: 0.2rem;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b7990d; 
+    border-radius: 0.2rem;
+    border: 2px solid #2e2e2e;
+    -webkit-border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    -ms-border-radius: 0.2rem;
+    -o-border-radius: 0.2rem;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f2f4cb; 
+  }
+.container {
+  background-color: #110b11;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: #f2f4cb;
+  display: flex;
+    flex-direction: row;
 }
 
-.card-right{
-    margin-right:5%;
+/* Styling for left container */
+.left-container {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2%;
+  margin-top: 2%;
 }
-.card-right .header-class span{
-    text-decoration: underline;
-    color:red;
+.left-container .logo {
+  color: lightgray;
+  opacity: 0.5;
 }
-.card-right .header-class span:hover{
+.left-container .tabs {
+  margin-top: 20%;
+}
+.left-container .tabs ul{
+    list-style-type: none;
+
+}
+.left-container .tabs ul li{
     cursor: pointer;
+    padding: 1rem;
+    color:#f2f4cb;
 }
-.input-list{
+.left-container .tabs ul li:hover{
+    background-color: #8cada7;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+}
+.left-container .tabs ul li span{
+    padding:0.2rem;
+    cursor: pointer;
+    color: #FFFFF7;
+    background-color: #b7990d;
+    border-radius: 0.2rem;
+    -webkit-border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    -ms-border-radius: 0.2rem;
+    -o-border-radius: 0.2rem;
+}
+.left-container .header{
+    margin-top: 10%;
+    color:#a5d0a8;
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+.left-container .collections{
     margin-top: 5%;
+    color:lightgray;
+    margin-bottom: 5%;
+}
+.left-container .collections .collection{
     display:flex;
-    gap:20px;
-    padding:0px;
-    width:fit-content;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    
+    flex-direction: column;
+    gap:2%;
 }
-input{
-    border-style:dotted;
-    background-color: none;
-    height:3.5rem;
-    width:2.5rem;
-    text-align: center;
-    font-size:2rem;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+.left-container .collections .collection-name{
+    display:flex;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 1rem;
+    color:#f2f4cb;
+
 }
-input:focus{
-    outline:none;
-    border-color:#bfe0de;
-    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-    border-style: solid;
-    text-align: center;
+
+.left-container .collections .collection-name .links-length{  
+    font-size: 0.8rem;
+    background-color: #b7990d;
+    padding: 0.2rem 0.5rem;
 }
-.card-left{
-    margin:auto;
+.left-container .collections .collection-name:hover{
+    background-color: #8cada7;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
 }
-.card-left h1{
-    font-size: 1.5rem ;
+.left-container .collections span{
+    padding:0.2rem;
+    margin-right:0.3rem;
+    color:#f2f4cb;
+    background-color: #b7990d;
+    border-radius: 0.2rem;
 }
-.card-information{
-    margin-top: 5%;
+.left-container .collections .collection-viewport{
+    height:40vh;
+    overflow-y: visible;
 }
 hr{
-    margin-top: 5%;
+    opacity:0.2;
+    color:lightgray;
 }
-.card-information .tag-list{
-    margin-top: 5%;
+.add-collection{
+    margin-top: 2%;
+    padding: 1rem;
+}
+.add-collection span{
+    padding:0.2rem;
+    color:#f2f4cb;
+    background-color: #b7990d;
+    border-radius: 0.2rem;
+    -webkit-border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    -ms-border-radius: 0.2rem;
+    -o-border-radius: 0.2rem;
+}
+.add-collection:hover{
+    cursor: pointer;
+    background-color: #8cada7;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+}
+.profile-name{
     display: flex;
-    align-items: start;
-    gap: 10px;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-top:10%;
+    width:100%;
+    border:0.1px solid #b7990d;
+    border-radius: 2rem;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    -ms-border-radius: 2rem;
+    -o-border-radius: 2rem;
 }
-.card-left .card-information .tags{
-    font-size: 1rem;
-    background-color: black;
-    color:white;
-    width: fit-content;
-    padding:6px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-}
-.card-left .card-information a button{
-    background-color: white !important;
-    padding: 2px !important;
+.profile .profile-name span{
+    cursor: pointer;
+    padding:0.2rem;
+    color:#f2f4cb;
+    background-color: #b7990d;
     border-radius: 50%;
-    margin-left: 1%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
-    transition: 0.3s border-color border ease;
-    -webkit-transition: 0.3s border-color border ease;
-    -moz-transition: 0.3s border-color border ease;
-    -ms-transition: 0.3s border-color border ease;
-    -o-transition: 0.3s border-color border ease;
-}
-.card-left .card-information a :hover{
-    border-color: red !important;
-    cursor: pointer;
-    color:red;
-}
 
+}
+.profile .profile-name .settings{
+    background-color: #110b11;
+    vertical-align: -4px;
+
+}
+/* end of left container styling */
+
+/* Styling for right container */
+.right-container{
+    color:white;
+    border:0.1px solid #b7990d;
+    width:80%;
+    height:95.5%;
+    margin:1% 1% 0;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}

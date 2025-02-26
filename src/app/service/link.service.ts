@@ -10,7 +10,7 @@ export class LinkService {
 
   private http = inject(HttpClient);
    
-   private apiUrl = "https://localhost:7174/api";
+   private apiUrl = "https://localhost:44398/api";
    constructor() { }
 
    addLink(url:string,collectionId:string,tags:string):Observable<LinkResponse>{

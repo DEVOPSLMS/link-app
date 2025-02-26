@@ -19,15 +19,7 @@ const routes: Routes = [
     component: HomeLayoutComponent,
 
     children: [
-      {
-        path: 'home',
-        component: HomeComponent 
-      },
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
+      
       {
         path: 'collection',
         component: CollectionComponent 
@@ -45,6 +37,15 @@ const routes: Routes = [
     path: '',
     component: SigninLayoutComponent, 
     children: [
+      {
+        path: 'home',
+        component: HomeComponent 
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
       {
         path: 'register',
         component: SignupComponent 

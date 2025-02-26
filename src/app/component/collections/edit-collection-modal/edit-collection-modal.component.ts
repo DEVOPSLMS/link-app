@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CollectionService } from '../../../service/collection.service';
 
@@ -10,6 +10,7 @@ import { CollectionService } from '../../../service/collection.service';
   styleUrl: './edit-collection-modal.component.css'
 })
 export class EditCollectionModalComponent {
+   @ViewChild('nameInput') collectionNameInput!: ElementRef;
  editForm: FormGroup;
   id:string="";
   collectionName:string="";
@@ -35,6 +36,9 @@ export class EditCollectionModalComponent {
     this.editForm.patchValue({
       name:this.collectionName  
     })
+    setTimeout(() => {
+      this.collectionNameInput.nativeElement.focus();
+    }, 0);
   }
   editCollection(){  
     console.log(this.id)

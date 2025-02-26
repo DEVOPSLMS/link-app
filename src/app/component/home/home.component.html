@@ -1,121 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-    <section class="search">
-        <div class="container">
-            <div class="card-left">
-                <div class="header-text">
-                    <h1>Your Linkages</h1>
-                </div>
-                <div class="card-information">
-                    <div class="card-text">
-                        <p>Lorem placeholder iadadk akdaksd</p>
-                        
-                    </div>
-                    <div class="tag-list">
-
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>  
-                        <a href=""><button class="see"><span class="material-symbols-outlined">
-                            arrow_forward
-                            </span></button></a>
-                    </div>
-                    
-                    
-                </div>
-               
-                <hr>
-                <div class="card-information">
-                    <div class="card-text">
-                        <p>Lorem placeholder iadadk akdaksd</p>
-                    </div>
-                    <div class="tag-list">
-
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>  
-                        <a href=""><button class="see"><span class="material-symbols-outlined">
-                            arrow_forward
-                            </span></button></a>
-                    </div>
-                    
-                </div>
-                
-                <hr>
-                <div class="card-information">
-                    <div class="card-text">
-                        <p>Lorem placeholder iadadk akdaksd</p>
-                    </div>
-                    <div class="tag-list">
-
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div>
-                        <div class="tags">
-                            <span>Tags</span>
-                            
-                        </div> 
-                        <a href=""><button class="see"><span class="material-symbols-outlined">
-                            arrow_forward
-                            </span></button></a> 
-                    </div>
-                    
-                </div>
-                
-                <hr>
+    <div class="container">
+        <div class="left-container">
+            <div class="logo">
+                <p>Linkhub</p>
+            </div>
+            <div class="tabs">
+                <ul>
+                    <li>
+                        <a><span class="material-symbols-outlined">
+                            bookmark
+                            </span> All bookmarks</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header">
+                <p>MY COLLECTIONS </p>
             </div>
            
-             
-            <div class="card-right">
-                <div class="header-class">
-                    <h1 >Enter 6 digit code to view <span class="others">other</span> linkage </h1>
+            <div class="collections">
+                <cdk-virtual-scroll-viewport
+                itemSize="items.length"
+                class="collection-viewport"
+              >
+                <div class="collection"*ngFor="let item of items; let i = index">
+                    <div class="collection-name">
+                        <p class="name"><span class="material-symbols-outlined">
+                            workspaces
+                            </span>{{ item.collectionName }}</p>
+                        <p class="links-length">{{item.links.length}}</p>
+                    </div>
+                    
                 </div>
+            </cdk-virtual-scroll-viewport>
+            </div>
+            <hr>
+            <p class="add-collection"><span class="material-symbols-outlined">add</span> New Collection</p>
+
+            <div class="profile">
                
-                <div class="input-list">
-                    <input 
-                    *ngFor="let digit of otpInputs; let i = index" 
-                    type="text" 
-                    maxlength="1" 
-                    [(ngModel)]="otp[i]" 
-                    (input)="moveToNext($event, i)" 
-                    (keydown)="handleKeydown($event, i)" 
-                    class="otp-input" 
-                    autocomplete="off">
+                <div class="profile-name">
+                    
+                    <p><span class="material-symbols-outlined">person</span> Username</p>
+                    <span class="material-symbols-outlined settings">
+                        settings
+                        </span>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="right-container">
+        </div>
+    </div>
 </body>
-
 </html>
