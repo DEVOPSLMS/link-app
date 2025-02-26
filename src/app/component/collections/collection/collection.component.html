@@ -1,121 +1,193 @@
 <body>
   <div class="container">
-    <div class="left-container">
+    <div class="left-container" #leftContainer>
       <div class="icon-list">
+        <app-add-collection-modal
+          #addCollectionModal
+          (collectionAdded)="onCollectionAdded($event)"
+        ></app-add-collection-modal>
+        <app-delete-collection-modal
+          #deleteCollectionModal
+          (collectionRemoved)="onCollectionRemoved($event)"
+        ></app-delete-collection-modal>
+        <app-edit-collection-modal
+          #editCollectionModal
+          (collectionEdited)="onCollectionEdited($event)"
+        ></app-edit-collection-modal>
+        <app-view-collection-modal
+          #viewCollectionModal
+        ></app-view-collection-modal>
+        <app-add-link-modal
+          #addLinkModal
+          (linkAdded)="onLinkAdded($event)"
+        ></app-add-link-modal>
 
-        <app-add-collection-modal #addCollectionModal (collectionAdded)="onCollectionAdded($event)"></app-add-collection-modal>
-        <app-delete-collection-modal #deleteCollectionModal (collectionRemoved)="onCollectionRemoved($event)"></app-delete-collection-modal>
-        <app-edit-collection-modal #editCollectionModal (collectionEdited)="onCollectionEdited($event)"></app-edit-collection-modal>
-        <app-view-collection-modal #viewCollectionModal ></app-view-collection-modal>
-        <app-add-link-modal #addLinkModal (linkAdded)="onLinkAdded($event)"></app-add-link-modal>
-
-        <app-delete-link-modal #deleteUrlModal (linkRemoved)="onLinkRemoved($event)"></app-delete-link-modal>
-        <app-update-link-modal #updateUrlModal (urlEdited)="onLinkEdit($event)"></app-update-link-modal>
-        <span class="material-symbols-outlined">
-          sort
-          </span>
-        <span class="material-symbols-outlined"(click)="addCollectionModal.openModal()">
+        <app-delete-link-modal
+          #deleteUrlModal
+          (linkRemoved)="onLinkRemoved($event)"
+        ></app-delete-link-modal>
+        <app-update-link-modal
+          #updateUrlModal
+          (urlEdited)="onLinkEdit($event)"
+        ></app-update-link-modal>
+        <span class="material-symbols-outlined"> sort </span>
+        <span
+          class="material-symbols-outlined"
+          (click)="addCollectionModal.openModal()"
+        >
           add
         </span>
-     
       </div>
-      
-    
-        <div  class="menu" >
-          <cdk-virtual-scroll-viewport itemSize="items.length" class="example-viewport">
+
+      <div class="menu">
+        <cdk-virtual-scroll-viewport
+          itemSize="items.length"
+          class="example-viewport"
+        >
           <div *ngFor="let item of items; let i = index; trackBy: trackByFn">
-       
-          <div class="collection-container">
-            <!-- Parent Collection -->
-           
-              <div class="example-box" #exampleBox  [id]="'item-' + item.id" (click)="toggleRightContainer(item)"
-              [ngClass]="{ 'active': activeItemId==item.id }">
-              <p>
-                {{item.collectionName}}
-                
-              </p>
-              <a [cdkMenuTriggerFor]="menu" class="material-symbols-outlined more">
-                more_horiz
-              </a>
-            </div>
-            <ng-template #menu>
-              <div class="example-menu" cdkMenu>
-                <!-- <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
-                  </a> -->
-                  <a class="example-menu-item" (click)="viewCollectionModal.openModal(item)"cdkMenuItem>View collection details</a>
-                  <a class="example-menu-item"(click)="editCollectionModal.openModal(item)" cdkMenuItem>Edit collection Name</a>
-                <a class="example-menu-item" (click)="deleteCollectionModal.openModal(item)"cdkMenuItem>Delete collection</a>
+            <div class="collection-container">
+              <!-- Parent Collection -->
+
+              <div
+                class="example-box"
+                #exampleBox
+                [id]="'item-' + item.id"
+                (click)="toggleRightContainer(item)"
+                [ngClass]="{ active: activeItemId == item.id }"
+              >
+                <p>
+                  {{ item.collectionName }}
+                </p>
+                <a class="links-length"*ngIf="activeItemId === item.id">{{item.links.length}}</a>
+                <a
+                  [cdkMenuTriggerFor]="menu"
+                  class="material-symbols-outlined more"
+                >
+                  more_horiz
+                </a>
               </div>
-            </ng-template>
-          </div>
+              <ng-template #menu>
+                <div class="example-menu" cdkMenu>
+                  <!-- <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
+                  </a> -->
+                  <a
+                    class="example-menu-item"
+                    (click)="viewCollectionModal.openModal(item)"
+                    cdkMenuItem
+                    >View collection details</a
+                  >
+                  <a
+                    class="example-menu-item"
+                    (click)="editCollectionModal.openModal(item)"
+                    cdkMenuItem
+                    >Edit collection Name</a
+                  >
+                  <a
+                    class="example-menu-item"
+                    (click)="deleteCollectionModal.openModal(item)"
+                    cdkMenuItem
+                    >Delete collection</a
+                  >
+                </div>
+              </ng-template>
+            </div>
           </div>
         </cdk-virtual-scroll-viewport>
-        </div>
-      
-     
+      </div>
     </div>
-    <div class="right-container" *ngIf="userClicked==true">
+    <div class="right-container" *ngIf="activeItemId != null">
       <div class="top-layout">
         <div class="collection-name">
-          <p>{{collectionName}}</p>
+          <p>{{ collectionName }}</p>
         </div>
         <div class="button-group">
-          
-        <button class="share"><span class="material-symbols-outlined add">share</span>Share Collection</button>
-        <button class="add-button"(click)="addLinkModal.openModal(collectionId)"> <span class="material-symbols-outlined add">add</span></button>
-      </div>
+          <button class="share">
+            <span class="material-symbols-outlined add">share</span>Share
+            Collection
+          </button>
+          <button
+            class="add-button"
+            (click)="addLinkModal.openModal(collectionId)"
+          >
+            <span class="material-symbols-outlined add">add</span>
+          </button>
+        </div>
       </div>
       <cdk-virtual-scroll-viewport itemSize="link.length" class="link-viewport">
-      <div class="link-layout">
-        <div class="link-container"*ngFor="let item of items; let i = index;">
-         <div *ngFor="let link of item.links; let i = index">
-          <div  *ngIf="link.collectionId==collectionId">
-           
-            <div class="link">
-              <div class="card">
-                <img class="extra" *ngIf="link.previewImageUrl != null"[src]="link.previewImageUrl" alt="">
-                <img class="extra" *ngIf="link.previewImageUrl == null">
-                <div class="card-bottom">
-                  <p>{{link.previewTitle}}</p>
-                  <div class="card-icons">
-                    <a href="{{link.url}}"target="_blank"><span class="material-symbols-outlined">
-                      open_in_new
-                      </span></a>
-                    <span  class="material-symbols-outlined"[cdkMenuTriggerFor]="linkmenu">
-                      more_vert
-                    </span>
-                  </div>
-           
-                  <ng-template #linkmenu>
-                    <div class="link-menu" cdkMenu>
-                      <button class="link-menu-item" cdkMenuItem (click)="showPopup()" [cdkCopyToClipboard]="link.url"><span class="material-symbols-outlined copy">  content_copy
-                      </span>Copy Link</button>
-                        <button class="link-menu-item" cdkMenuItem (click)="updateUrlModal.openModal(link)"><span class="material-symbols-outlined copy">  edit
-                        </span>Edit Link</button>
-                      <button class="link-menu-item" (click)="deleteUrlModal.openModal(link)"cdkMenuItem><span class="material-symbols-outlined copy"> delete
-                      </span>Delete</button>
-                      
+        <div class="link-layout">
+          <div class="link-container" *ngFor="let item of items; let i = index">
+            <div *ngFor="let link of item.links; let i = index">
+              <div *ngIf="link.collectionId == collectionId">
+                <div class="link">
+                  <div class="card">
+                    <img
+                      class="extra"
+                      *ngIf="link.previewImageUrl != null"
+                      [src]="link.previewImageUrl"
+                      alt=""
+                    />
+
+                    <div class="card-bottom">
+                      <p>{{ link.previewTitle }}</p>
+                      <div class="card-icons">
+                        <a href="{{ link.url }}" target="_blank"
+                          ><span class="material-symbols-outlined">
+                            open_in_new
+                          </span></a
+                        >
+                        <span
+                          class="material-symbols-outlined"
+                          [cdkMenuTriggerFor]="linkmenu"
+                        >
+                          more_vert
+                        </span>
+                      </div>
+
+                      <ng-template #linkmenu>
+                        <div class="link-menu" cdkMenu>
+                          <button
+                            class="link-menu-item"
+                            cdkMenuItem
+                            (click)="showPopup()"
+                            [cdkCopyToClipboard]="link.url"
+                          >
+                            <span class="material-symbols-outlined copy">
+                              content_copy </span
+                            >Copy Link
+                          </button>
+                          <button
+                            class="link-menu-item"
+                            cdkMenuItem
+                            (click)="updateUrlModal.openModal(link)"
+                          >
+                            <span class="material-symbols-outlined copy">
+                              edit </span
+                            >Edit Link
+                          </button>
+                          <button
+                            class="link-menu-item"
+                            (click)="deleteUrlModal.openModal(link)"
+                            cdkMenuItem
+                          >
+                            <span class="material-symbols-outlined copy">
+                              delete </span
+                            >Delete
+                          </button>
+                        </div>
+                      </ng-template>
                     </div>
-                  </ng-template>
-                  
-                    
+                  </div>
                 </div>
               </div>
             </div>
-  
           </div>
-         </div>
-    
         </div>
-      </div>
-    </cdk-virtual-scroll-viewport>
-      <div class="popup-dialog"*ngIf="popup"@fadeInOut>
+      </cdk-virtual-scroll-viewport>
+      <div class="popup-dialog" *ngIf="popup" @fadeInOut>
         <div class="popup-content">
           <p>Link copied to clipboard</p>
         </div>
       </div>
-
     </div>
-
   </div>
 </body>

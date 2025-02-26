@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LinkService } from '../../../service/link.service';
 
@@ -9,6 +9,7 @@ import { LinkService } from '../../../service/link.service';
   styleUrl: './update-link-modal.component.css'
 })
 export class UpdateLinkModalComponent {
+  @ViewChild('urlInput') urlInput!: ElementRef;
   editForm: FormGroup;
   id: string = "";
   url: string = "";
@@ -54,6 +55,9 @@ export class UpdateLinkModalComponent {
       url: this.url,
       tagInput: ''
     });
+    setTimeout(() => {
+      this.urlInput.nativeElement.focus();
+    }, 0);
   }
 
   editLink(): void {

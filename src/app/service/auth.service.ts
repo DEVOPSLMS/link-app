@@ -11,7 +11,7 @@ import { LoginModel, LoginResponse } from '../Models/login_model';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = "https://localhost:7174/api";
+  private apiUrl = "https://localhost:44398/api";
   private refreshTokenSubject = new BehaviorSubject<string>('');
   refreshToken$ = this.refreshTokenSubject.asObservable();
   private email = new BehaviorSubject<string>(''); // Default value

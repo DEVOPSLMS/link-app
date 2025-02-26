@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CollectionService } from '../../../service/collection.service';
 import { LinkService } from '../../../service/link.service';
@@ -11,6 +11,7 @@ import { LinkService } from '../../../service/link.service';
   styleUrl: './add-link-modal.component.css'
 })
 export class AddLinkModalComponent {
+  @ViewChild('urlInput') urlInput!: ElementRef;
 addForm: FormGroup;
   isLoading = false;
   collectionId:string="";
@@ -34,6 +35,9 @@ addForm: FormGroup;
   openModal(collectionId:string): void {
     this.isVisible = true;
     this.collectionId=collectionId;
+    setTimeout(() => {
+      this.urlInput.nativeElement.focus();
+    }, 0);
   }
 
   addTag(tag: string): void {
