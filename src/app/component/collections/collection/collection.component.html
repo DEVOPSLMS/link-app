@@ -121,8 +121,7 @@
                 <div class="link">
                   <div class="card">
                     <img
-                      class="extra"
-                      *ngIf="link.previewImageUrl != null"
+                      class="extra"(error)="hideImage($event)"
                       [src]="link.previewImageUrl"
                       alt=""
                     />
@@ -169,7 +168,7 @@
                             (click)="deleteUrlModal.openModal(link)"
                             cdkMenuItem
                           >
-                            <span class="material-symbols-outlined copy">
+                            <span class="material-symbols-outlined copy" style="color:red;">
                               delete </span
                             >Delete
                           </button>

@@ -294,5 +294,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
       this.popup = false;
     }, 3000);
   }
-  
+  hideImage(event:Event){
+    const img = event.target as HTMLImageElement;
+    img.hidden=true;
+  }
 }

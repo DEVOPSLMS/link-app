@@ -57,6 +57,9 @@ body {
 }
 .icon-list span {
   cursor: pointer;
+  background-color: lightgray;
+    padding:0.2rem;
+    margin:0.1rem;
 }
 .menu {
   width: 100%;
@@ -158,10 +161,11 @@ body {
   flex: 1;
 }
 .link-menu {
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   display: inline-flex;
   flex-direction: column;
-  min-width: 5rem;
+  min-width: 3rem;
+  max-width:2rem;
   max-width: 10rem;
   background-color: rgba(255, 255, 255);
   padding: 6px 0;
@@ -178,15 +182,16 @@ body {
   cursor: pointer;
   border: none;
   user-select: none;
-  min-width: 64px;
-  line-height: 36px;
-  padding: 0 16px;
+  min-width: 4rem;
+  line-height: 2rem;
+  padding: 0 1rem;
   outline: none;
   display: flex;
   align-items: center;
   flex-direction: row;
   flex: 1;
   color: black;
+  font-size: 0.8rem;
   border-radius: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -248,6 +253,7 @@ body {
 }
 
 .right-container {
+  z-index: 1;
   flex-grow: 1;
   overflow-y: hidden;
 }
@@ -269,6 +275,7 @@ body {
   margin-left: auto;
   padding: 1rem;
 }
+
 .button-group .share {
   margin-right: 1rem;
   background-color: green;
@@ -323,7 +330,8 @@ body {
 }
 
 .example-viewport {
-  overflow-y: visible;
+  overflow-x: hidden;
+  overflow-y: scroll;
   height: 100%;
   text-overflow: ellipsis;
 }
