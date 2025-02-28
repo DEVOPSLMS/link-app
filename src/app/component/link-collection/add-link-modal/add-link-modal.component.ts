@@ -19,7 +19,8 @@ addForm: FormGroup;
   constructor(private linkService:LinkService,private fb:FormBuilder){
     this.addForm = this.fb.group({
       url: ['', [Validators.required]],
-      tags: ['']
+      tags: [''],
+      description:['']
     });
   }
 
@@ -65,7 +66,7 @@ addForm: FormGroup;
     this.addForm.patchValue({ tags: this.tags.join(',') });
   }
   addLink(){
-    this.linkService.addLink(this.addForm.value.url,this.collectionId,this.addForm.value.tags).subscribe({
+    this.linkService.addLink(this.addForm.value.url,this.collectionId,this.addForm.value.tags,this.addForm.value.description).subscribe({
       next:(response)=>{
         this.linkAdded.emit(response);
         this.isLoading = false;

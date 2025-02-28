@@ -10,25 +10,26 @@ export class LinkService {
 
   private http = inject(HttpClient);
    
-   private apiUrl = "https://localhost:44398/api";
+   private apiUrl = "https://localhost:7174/api";
    constructor() { }
 
-   addLink(url:string,collectionId:string,tags:string):Observable<LinkResponse>{
+   addLink(url:string,collectionId:string,tags:string,description:string):Observable<LinkResponse>{
     const linkModel:LinkModel={ 
       url,
       collectionId,
-      tags
+      tags,
+      description
     }
      return this.http.post<LinkResponse>(this.apiUrl+"/link/create-url",linkModel,{withCredentials:true})
    }
    deleteLink(id:string):Observable<LinkResponse>{
      return this.http.delete<LinkResponse>(this.apiUrl+"/link/delete-url/"+id,{withCredentials:true})
    }
-    editLink(url:string,tags:string,id:string):Observable<LinkResponse>{
+    editLink(url:string,tags:string,id:string,description:string):Observable<LinkResponse>{
       const UpdateLinkModel:UpdateLinkModel={ 
         url,
         tags,
-
+        description
       }
       return this.http.put<LinkResponse>(this.apiUrl+"/link/update-url/"+id,UpdateLinkModel,{withCredentials:true})
     }

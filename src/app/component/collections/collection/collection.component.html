@@ -14,14 +14,14 @@
           #editCollectionModal
           (collectionEdited)="onCollectionEdited($event)"
         ></app-edit-collection-modal>
-        <app-view-collection-modal
-          #viewCollectionModal
-        ></app-view-collection-modal>
+        <app-share-collection-modal
+        #shareCollectionModal
+      ></app-share-collection-modal>
+
         <app-add-link-modal
           #addLinkModal
           (linkAdded)="onLinkAdded($event)"
         ></app-add-link-modal>
-
         <app-delete-link-modal
           #deleteUrlModal
           (linkRemoved)="onLinkRemoved($event)"
@@ -30,6 +30,9 @@
           #updateUrlModal
           (urlEdited)="onLinkEdit($event)"
         ></app-update-link-modal>
+
+        <app-pop-up-dialog #showPopUp></app-pop-up-dialog>
+
         <span class="material-symbols-outlined"> sort </span>
         <span
           class="material-symbols-outlined"
@@ -58,7 +61,9 @@
                 <p>
                   {{ item.collectionName }}
                 </p>
-                <a class="links-length"*ngIf="activeItemId === item.id">{{item.links.length}}</a>
+                <a class="links-length" *ngIf="activeItemId === item.id">{{
+                  item.links.length
+                }}</a>
                 <a
                   [cdkMenuTriggerFor]="menu"
                   class="material-symbols-outlined more"
@@ -70,12 +75,6 @@
                 <div class="example-menu" cdkMenu>
                   <!-- <a class="example-menu-item" cdkMenuItem (click)="toggleNestedInput($event,item)">Add Collection
                   </a> -->
-                  <a
-                    class="example-menu-item"
-                    (click)="viewCollectionModal.openModal(item)"
-                    cdkMenuItem
-                    >View collection details</a
-                  >
                   <a
                     class="example-menu-item"
                     (click)="editCollectionModal.openModal(item)"
@@ -101,7 +100,7 @@
           <p>{{ collectionName }}</p>
         </div>
         <div class="button-group">
-          <button class="share">
+          <button class="share"(click)="shareCollectionModal.openModal(activeItemId)">
             <span class="material-symbols-outlined add">share</span>Share
             Collection
           </button>
@@ -115,15 +114,18 @@
       </div>
       <cdk-virtual-scroll-viewport itemSize="link.length" class="link-viewport">
         <div class="link-layout">
+          
           <div class="link-container" *ngFor="let item of items; let i = index">
             <div *ngFor="let link of item.links; let i = index">
               <div *ngIf="link.collectionId == collectionId">
-                <div class="link">
+                <div class="link"cdkDragBoundary=".link-layout" cdkDrag>
                   <div class="card">
                     <img
-                      class="extra"(error)="hideImage($event)"
+                      class="extra"
+                      (error)="hideImage($event)"
                       [src]="link.previewImageUrl"
                       alt=""
+                      loading="lazy"
                     />
 
                     <div class="card-bottom">
@@ -147,7 +149,7 @@
                           <button
                             class="link-menu-item"
                             cdkMenuItem
-                            (click)="showPopup()"
+                            (click)="showPopUp.showPopup()"
                             [cdkCopyToClipboard]="link.url"
                           >
                             <span class="material-symbols-outlined copy">
@@ -168,7 +170,10 @@
                             (click)="deleteUrlModal.openModal(link)"
                             cdkMenuItem
                           >
-                            <span class="material-symbols-outlined copy" style="color:red;">
+                            <span
+                              class="material-symbols-outlined copy"
+                              style="color: red"
+                            >
                               delete </span
                             >Delete
                           </button>
@@ -179,14 +184,11 @@
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </cdk-virtual-scroll-viewport>
-      <div class="popup-dialog" *ngIf="popup" @fadeInOut>
-        <div class="popup-content">
-          <p>Link copied to clipboard</p>
-        </div>
-      </div>
+     
     </div>
   </div>
 </body>

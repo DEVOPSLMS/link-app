@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 2;
   
   }
   
@@ -65,7 +65,21 @@
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem;
   }
-  
+  textarea{
+    height: 3rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid #e5e5e5;
+    font-size: 1rem;/* Take remaining space */
+    padding-right: 40px;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+    resize: vertical;
+  }
   .button-bottom{
     margin-top: 2rem;
     float:right;
