@@ -3,8 +3,11 @@ import {
   ElementRef,
   HostListener,
   inject,
+  Input,
+  NgZone,
   OnDestroy,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { CollectionService } from '../../../service/collection.service';
@@ -50,16 +53,15 @@ export class CollectionComponent implements OnInit, OnDestroy {
   userClicked: any;
   collectionName: any;
   collectionId: string = '';
-  private timeoutId: any;
   private subscription: Subscription;
   private destroy$ = new Subject<void>();
-  popup: boolean = false;
+  observer:any;
   safeHtml: SafeHtml;
 
   constructor(
     private sanitizer: DomSanitizer,
     private collectionService: CollectionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,private el:ElementRef,private renderer: Renderer2
   ) {
     this.addCollectionForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -228,7 +230,10 @@ export class CollectionComponent implements OnInit, OnDestroy {
         this.collectionId = newActiveCollection.id;
         this.router.navigate([], {
           relativeTo: this.route,
-          queryParams: { collection: true, collectionId: newActiveCollection.id },
+          queryParams: {
+            collection: true,
+            collectionId: newActiveCollection.id,
+          },
           queryParamsHandling: 'merge',
         });
       } else {
@@ -287,15 +292,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
       );
     }
   }
-  showPopup() {
-    this.popup = true;
-    clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(() => {
-      this.popup = false;
-    }, 3000);
-  }
-  hideImage(event:Event){
+
+  hideImage(event: Event) {
     const img = event.target as HTMLImageElement;
-    img.hidden=true;
+    img.hidden = true;
   }
-}
+
+ }
+

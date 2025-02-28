@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="modal" >
+        <div class="modal-content">
+            <h2 class="login">Login</h2>
+            <div class="input-field">
+                <form action="" [formGroup]="loginForm" autocomplete="off">
+                    <div class="email">
+                        <span>Email</span>
+                        <input type="email" class="input-field-modal" autocomplete="off webauthn" name="new-email"
+                        formControlName="email" placeholder="Enter Email">
+                    </div>
+                    <span class="password-text">Password</span>
+                    <div class="password">
+                        
+                        <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                            class="input-field-modal" autocomplete="off webauthn" placeholder="Enter Password">
+                            
+                        <button (click)="togglePasswordVisibility()"type="button" class="toggle-button">
+                            <span class="material-symbols-outlined">
+                                {{ showPassword ? 'visibility_off' : 'visibility' }}
+                            </span>
+                        </button>
+                    </div>
+                    <p  class="errorMessage">{{errorMessage}}</p>
+                    <p class="bottom-text"></p>
+                    <button class="login-button" (click)="login()"[disabled]="isLoading"><span *ngIf="!isLoading">Log In</span><div *ngIf="isLoading" class="spinner"></div></button>
+                
+                    <a href="forgot-password" class="forget">Forgot Password?</a>
+                    <div class="signup">
+                        <p>Don't have an account? <span><a [routerLink]="['/register']">Sign Up Here</a></span></p>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>

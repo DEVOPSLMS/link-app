@@ -1,13 +1,4 @@
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-  
-  }
+
   
   .modal {
     position: fixed;
@@ -15,7 +6,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    padding: 2rem;
+    padding: 20px;
     border-radius: 8px;
     z-index: 2;
     width: 30rem;
@@ -28,14 +19,13 @@
   
   
   
-  .collection  {
+  .login  {
     text-underline-offset: 0.4rem;
     text-decoration-line: underline;
     -moz-text-decoration-line: underline;
     color: black;
     text-align: center;
     font-size: 1.5rem;
-   
   }
   
   
@@ -43,16 +33,32 @@
   .input-field {
     display: flex;
     flex-direction: column;
-   
+  
   }
   
-  .input-field {
+  .email {
     margin-top: 2rem;
   }
-
+  
+  .password {
+  
+    position: relative; /* For absolute positioning (optional) */
+    display: flex;
+    align-items: center; /* Vertically center the button */
+    gap: 0.5rem; /* Space between input and button (optional) */
+  }
+  
+  .email span {
+    font-size: 1.2rem;
+  }
+  
+  .password span {
+    font-size: 1.2rem;
+  }
+  
   .input-field-modal {
     height: 3rem;
-    width: 100%;
+    width: 27.5rem;
     margin-top: 0.5rem;
     padding: 0.5rem;
     border: 2px solid #e5e5e5;
@@ -66,21 +72,54 @@
     -o-border-radius: 0.5rem;
   }
   
-  .button-bottom{
-    margin-top: 2rem;
+  .login-button {
+    width: 27.5rem;
+  }
+  .forget{
+    margin-top:0.5rem;
+    color:#2b7eff;
+    font-size: 1rem;
     float:right;
   }
- .button-bottom .cancel{
-  border:none;
-  background-color: white;
-  color:black;
- }
- .button-bottom .cancel:hover{
-  background-color: lightgray;
- }  
- .button-bottom .save{
-  border:none;
- }
+  .forget:hover{
+    cursor: pointer;
+  }
+  .close-button{
+   
+    width:28.5rem;
+  }
+  .close-button span{
+  
+    float:right;
+    margin-bottom: 1rem;
+  }
+  .close-button span:hover{
+    color:red;
+    cursor: pointer;
+  }
+  .toggle-button {
+    position: absolute;
+    top:1.3rem;
+    right: 1rem;
+    padding:0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+  }
+  .signup{
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1.2rem;
+  }
+  .signup a{
+    color:gray;
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+  }
+  .signup a:hover{
+    cursor: pointer;
+  }
   .spinner {
     border: 3px solid #f3f3f3; /* Light grey */
     border-top: 3px solid #3498db; /* Blue */
@@ -96,5 +135,15 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-
+  .errorMessage{
+    color:red;
+    margin-top:0.5rem !important;
+    font-size: 1.2rem;
+    font-weight: bold;
+  
+  }
+  .password-text{
+    margin-top:2rem;
+    font-size:1.2rem;
+  }
   

@@ -19,7 +19,8 @@ export class UpdateLinkModalComponent {
   constructor(private linkService: LinkService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
       url: ['', [Validators.required]],
-      tagInput: ['']
+      tagInput: [''],
+      description:['']
     });
   }
 
@@ -53,7 +54,8 @@ export class UpdateLinkModalComponent {
     this.tags = item.tags ? item.tags.split(',') : [];
     this.editForm.patchValue({
       url: this.url,
-      tagInput: ''
+      tagInput: '',
+      description:item.description
     });
     setTimeout(() => {
       this.urlInput.nativeElement.focus();
@@ -63,7 +65,7 @@ export class UpdateLinkModalComponent {
   editLink(): void {
     console.log(this.id);
     const tags = this.tags.join(',');
-    this.linkService.editLink(this.editForm.value.url, tags, this.id).subscribe({
+    this.linkService.editLink(this.editForm.value.url, tags, this.id,this.editForm.value.description).subscribe({
       next: (response) => {
         this.urlEdited.emit(response);
         this.editForm.reset();

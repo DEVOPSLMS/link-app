@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 2;
   
   }
   
@@ -64,7 +64,22 @@
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem;
   }
-  
+  .textarea-field{
+    height: 3rem;
+    width: 27.5rem;
+    resize:vertical;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid #e5e5e5;
+    font-size: 1rem;
+    flex: 1; /* Take remaining space */
+    padding-right: 40px;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+  }
   .button-group{
     margin-top: 2rem;
     float:right;

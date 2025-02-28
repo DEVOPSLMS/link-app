@@ -1,0 +1,14 @@
+.popup-dialog {
+    position: fixed;
+    background-color: lightblue;
+    top: 90%;
+    padding: 1rem;
+  
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+    left: 45%;
+  }

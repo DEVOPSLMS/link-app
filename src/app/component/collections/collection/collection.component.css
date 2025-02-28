@@ -232,16 +232,6 @@ body {
 .addCollection:focus {
   outline: none;
 }
-
-.tree-invinsible {
-  display: none;
-}
-.tree-node {
-  display: block;
-}
-.tree-node .tree-node {
-  padding-left: 40px;
-}
 .arrow {
   transition: transform 0.2s;
   cursor: pointer;
@@ -255,7 +245,7 @@ body {
 .right-container {
   z-index: 1;
   flex-grow: 1;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .top-layout {
@@ -279,8 +269,24 @@ body {
 .button-group .share {
   margin-right: 1rem;
   background-color: green;
+  font-size: 0.9rem;
 }
+.button-group .share span{
+  margin-right: 0.4rem;
+}
+
+.resize-handler{
+  border-bottom: 0.1px solid lightgray;
+  cursor: row-resize;
+  height:0.1rem;
+}
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .link-container {
+  position: relative;
   display: grid;
   grid-template-columns: 21% 21% 21% 21%;
   margin-left: 6%;
@@ -297,6 +303,9 @@ body {
   -ms-border-radius: 0.5rem;
   margin: 1rem;
   -o-border-radius: 0.5rem;
+}
+.link-container .card:hover{
+  cursor: move;
 }
 .link-container .card .extra {
   border-radius: 0.5rem;
@@ -331,24 +340,10 @@ body {
 
 .example-viewport {
   overflow-x: hidden;
-  overflow-y: scroll;
   height: 100%;
   text-overflow: ellipsis;
 }
 .link-viewport {
   height: calc(100vh - 11rem);
 }
-.popup-dialog {
-  position: fixed;
-  background-color: lightblue;
-  top: 90%;
-  padding: 1rem;
 
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  -webkit-border-radius: 0.5rem;
-  -moz-border-radius: 0.5rem;
-  -ms-border-radius: 0.5rem;
-  -o-border-radius: 0.5rem;
-  left: 45%;
-}
