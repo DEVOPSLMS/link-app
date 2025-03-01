@@ -13,60 +13,60 @@ import { ShareCollectionComponent } from './component/collections/share-collecti
 import { AuthGuard } from './guard/auth.guard';
 import { LoginGuard } from './guard/login.guard';
 
-
-
-
 const routes: Routes = [
   {
-    path: '',                       
+    path: '',
+
     component: HomeLayoutComponent,
 
     children: [
-    ]
-  },
-  {
-    path: '',
-    component: SigninLayoutComponent, 
-    children: [
+      {
+        path: 'app',
+        canActivate: [AuthGuard],
+        component: ApplicationComponent,
+      },
 
       {
         path: '',
         redirectTo: 'app',
-        pathMatch: 'full'
-      },
-      {
-        path: 'auth/register',
-        component: SignupComponent ,
+        pathMatch: 'full',
       },
       {
         path: 'share',
-        component: ShareCollectionComponent 
+        component: ShareCollectionComponent,
+      },
+    ],
+  },
+
+  {
+    path: '',
+    component: SigninLayoutComponent,
+
+    children: [
+      {
+        path: 'auth/register',
+        component: SignupComponent,
+      },
+
+      {
+        path: 'auth/forgot-password',
+        component: ForgotPasswordComponent,
       },
       {
-        path: '/auth/forgot-password',
-        component: ForgotPasswordComponent 
+        path: 'auth/verify-email',
+        component: VerifyEmailComponent,
       },
-      {
-        path: '/auth/verify-email',
-        component: VerifyEmailComponent 
-      },
-      {
-        path: 'app',
-        
-        component: ApplicationComponent ,
-        canActivate:[AuthGuard]
-      },
+
       {
         path: 'auth/login',
-        component: LoginComponent ,
+        component: LoginComponent,
       },
-    ]
-  }
-
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

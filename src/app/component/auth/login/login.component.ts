@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   constructor(private authService:AuthService,private fb:FormBuilder,private cdr:ChangeDetectorRef,private router:Router){
     this.loginForm = this.fb.group({
@@ -24,7 +24,16 @@ export class LoginComponent {
   isLoading = false;
   errorMessage:string='';
 
-
+  ngOnInit(): void {
+    this.authService.verifyUser().subscribe({
+      next:(response:any)=>{
+        if(response){
+          this.router.navigateByUrl("/app")
+        }
+        
+      }
+    })
+  }
   @Output() closed = new EventEmitter<void>();
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

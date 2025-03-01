@@ -22,9 +22,14 @@
                     <div class="input-box-card">
                         <ul>
                             <li>
-                                <p><span class="material-symbols-outlined link">
+                                <a *ngIf="searchControl.value && searchControl.value.trim() !== ''"><span class="material-symbols-outlined link">
                                     list_alt
-                                    </span>All collections</p>
+                                    </span>{{searchControl.value}}</a>
+                            </li>
+                            <li *ngFor="let search of searchDetails">
+                                <a *ngIf="searchDetails.length > 0"[routerLink]="['/app']"[queryParams]="{ collection: true, collectionId: search.id }"><span class="material-symbols-outlined link">
+                                    list_alt
+                                    </span>{{search.collectionName}}</a>
                             </li>
                         </ul>
                     </div>

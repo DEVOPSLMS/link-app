@@ -15,8 +15,8 @@
           (collectionEdited)="onCollectionEdited($event)"
         ></app-edit-collection-modal>
         <app-share-collection-modal
-        #shareCollectionModal
-      ></app-share-collection-modal>
+          #shareCollectionModal
+        ></app-share-collection-modal>
 
         <app-add-link-modal
           #addLinkModal
@@ -100,7 +100,10 @@
           <p>{{ collectionName }}</p>
         </div>
         <div class="button-group">
-          <button class="share"(click)="shareCollectionModal.openModal(activeItemId)">
+          <button
+            class="share"
+            (click)="shareCollectionModal.openModal(activeItemId)"
+          >
             <span class="material-symbols-outlined add">share</span>Share
             Collection
           </button>
@@ -114,11 +117,10 @@
       </div>
       <cdk-virtual-scroll-viewport itemSize="link.length" class="link-viewport">
         <div class="link-layout">
-          
           <div class="link-container" *ngFor="let item of items; let i = index">
             <div *ngFor="let link of item.links; let i = index">
               <div *ngIf="link.collectionId == collectionId">
-                <div class="link"cdkDragBoundary=".link-layout" cdkDrag>
+                <div class="link" cdkDragBoundary=".link-layout" cdkDrag>
                   <div class="card">
                     <img
                       class="extra"
@@ -180,15 +182,20 @@
                         </div>
                       </ng-template>
                     </div>
+                    <div
+                    class="description"
+                    *ngIf="link.description && link.description.trim() !== ''"
+                  >
+                    <p>{{ link.description }}</p>
+                  </div>
+                   
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </cdk-virtual-scroll-viewport>
-     
     </div>
   </div>
 </body>
