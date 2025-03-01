@@ -11,6 +11,7 @@ import {
   CollectionResponse,
   deleteCollection,
   editCollection,
+  editCollectionPublic,
 } from '../Models/collection_model';
 
 @Injectable({
@@ -81,6 +82,25 @@ export class CollectionService {
     return this.http
       .put<CollectionResponse>(
         this.apiUrl + '/link/update-collection/' + id,
+        collection,
+        { withCredentials: true }
+      )
+      .pipe(
+        tap((response: any) => {
+          console.log(response);
+        })
+      );
+  }
+  editCollectionPublic(
+    isPublic: boolean,
+    id: string
+  ): Observable<CollectionResponse> {
+    const collection: editCollectionPublic = {
+      isPublic,
+    };
+    return this.http
+      .put<CollectionResponse>(
+        this.apiUrl + '/link/update-collection-public/' + id,
         collection,
         { withCredentials: true }
       )

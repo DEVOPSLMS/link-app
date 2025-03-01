@@ -7,10 +7,11 @@ import { SigninLayoutComponent } from './layouts/signin-layout/signin-layout.com
 import { ForgotPasswordComponent } from './component/auth/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/auth/verify-email/verify-email.component';
 import { CollectionComponent } from './component/collections/collection/collection.component';
-import { FooterComponent } from './component/footer/footer.component';
 import { ApplicationComponent } from './component/application/application.component';
 import { LoginComponent } from './component/auth/login/login.component';
 import { ShareCollectionComponent } from './component/collections/share-collection/share-collection.component';
+import { AuthGuard } from './guard/auth.guard';
+import { LoginGuard } from './guard/login.guard';
 
 
 
@@ -21,56 +22,43 @@ const routes: Routes = [
     component: HomeLayoutComponent,
 
     children: [
-      
-      {
-        path: 'collection',
-        component: CollectionComponent 
-      },
-      {
-        path: 'footer',
-        component: FooterComponent 
-      },
-   
-      
-
     ]
   },
   {
     path: '',
     component: SigninLayoutComponent, 
     children: [
-      {
-        path: 'home',
-        component: HomeComponent 
-      },
+
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'app',
         pathMatch: 'full'
       },
       {
-        path: 'register',
-        component: SignupComponent 
+        path: 'auth/register',
+        component: SignupComponent ,
       },
       {
         path: 'share',
         component: ShareCollectionComponent 
       },
       {
-        path: 'forgot-password',
+        path: '/auth/forgot-password',
         component: ForgotPasswordComponent 
       },
       {
-        path: 'verify-email',
+        path: '/auth/verify-email',
         component: VerifyEmailComponent 
       },
       {
         path: 'app',
-        component: ApplicationComponent 
+        
+        component: ApplicationComponent ,
+        canActivate:[AuthGuard]
       },
       {
         path: 'auth/login',
-        component: LoginComponent 
+        component: LoginComponent ,
       },
     ]
   }

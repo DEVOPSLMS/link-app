@@ -4,8 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
-import { NavbarComponent } from './component/navbar/navbar.component';
-import { FooterComponent } from './component/footer/footer.component';
 import { LoginModalComponent } from './component/login-modal/login-modal.component';
 import { SignupComponent } from './component/auth/signup/signup.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
@@ -40,8 +38,6 @@ import { PopUpDialogComponent } from './component/pop-up-dialog/pop-up-dialog.co
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent,
-    FooterComponent,
     LoginModalComponent,
     SignupComponent,
     HomeLayoutComponent,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,8 +24,9 @@ export class LoginModalComponent {
   showPassword: boolean = false;
   isLoading = false;
   errorMessage:string='';
-
   @Output() closed = new EventEmitter<void>();
+
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   }
   title = 'link-app';
   ngOnInit(): void {
-    this.authService.verifyUser().subscribe({})
+  
       
     
   }

@@ -112,7 +112,7 @@ export class AuthService {
       tap((response: any) => {
         this.refreshTokenSubject.next('true');
         setTimeout(()=>{
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/app');
         },2000);
         
       })
