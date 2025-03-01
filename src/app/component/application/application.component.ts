@@ -26,6 +26,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   userClicked = false;
   private searchSubscription: Subscription;
   searchControl: FormControl = new FormControl();
+  searchDetails:any;
   ngOnInit(): void {
     this.searchSubscription = this.searchControl.valueChanges
       .pipe(
@@ -42,7 +43,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   performSearch(query: string) {
     // Replace with your service API call
     this.collectionService.searchCollection(query).subscribe((results) => {
-      console.log(results);
+      this.searchDetails=results;
     });
   }
   click() {

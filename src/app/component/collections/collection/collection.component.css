@@ -265,10 +265,12 @@ body {
   margin-left: auto;
   padding: 1rem;
 }
-
+.button-group .add-button{
+  font-size: 0.9rem;
+}
 .button-group .share {
   margin-right: 1rem;
-  background-color: green;
+  background-color: rgb(0, 0, 0);
   font-size: 0.9rem;
 }
 .button-group .share span{
@@ -317,7 +319,20 @@ body {
   -ms-border-radius: 0.5rem;
   -o-border-radius: 0.5rem;
 }
-
+.description{
+  padding:0.2rem;
+  width:fit-content;
+  background-color: lightgray;
+  margin-top:0.5rem;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+}
+.description {
+  text-overflow: ellipsis;  
+}
 .link-container .card .card-bottom {
   width: 100%;
   display: flex;
@@ -346,4 +361,5 @@ body {
 .link-viewport {
   height: calc(100vh - 11rem);
 }
+
 

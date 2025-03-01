@@ -25,7 +25,7 @@ export class LinkService {
    deleteLink(id:string):Observable<LinkResponse>{
      return this.http.delete<LinkResponse>(this.apiUrl+"/link/delete-url/"+id,{withCredentials:true})
    }
-    editLink(url:string,tags:string,id:string,description:string):Observable<LinkResponse>{
+    editLink(url:string,tags:string,description:string,id:string):Observable<LinkResponse>{
       const UpdateLinkModel:UpdateLinkModel={ 
         url,
         tags,

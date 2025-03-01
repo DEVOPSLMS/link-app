@@ -34,6 +34,8 @@ import { LoginComponent } from './component/auth/login/login.component';
 import { ShareCollectionComponent } from './component/collections/share-collection/share-collection.component';
 import { ShareCollectionModalComponent } from './component/collections/share-collection-modal/share-collection-modal.component';
 import { PopUpDialogComponent } from './component/pop-up-dialog/pop-up-dialog.component';
+import { AuthGuard } from './guard/auth.guard';
+import { LoginGuard } from './guard/login.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +79,7 @@ import { PopUpDialogComponent } from './component/pop-up-dialog/pop-up-dialog.co
     CdkDrag
   ],
 
-  providers: [AuthService,CookieService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},CollectionService,DatePipe],
+  providers: [AuthService,CookieService,{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},CollectionService,DatePipe,AuthGuard,LoginGuard],
   bootstrap: [AppComponent],
   
   

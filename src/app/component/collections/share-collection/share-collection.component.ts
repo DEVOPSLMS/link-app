@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CollectionService } from '../../../service/collection.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-share-collection',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
   templateUrl: './share-collection.component.html',
   styleUrl: './share-collection.component.css'
 })
-export class ShareCollectionComponent {
-
+export class ShareCollectionComponent implements OnInit{
+  
+  constructor(private collectionService:CollectionService,private route:ActivatedRoute){}
+  ngOnInit(): void {
+    
+  }
 }

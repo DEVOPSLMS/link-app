@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, Output } from '@angular/core';
 import { CollectionService } from '../../../service/collection.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-share-collection-modal',
   standalone: false,
@@ -9,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './share-collection-modal.component.html',
   styleUrl: './share-collection-modal.component.css'
 })
-export class ShareCollectionModalComponent {
+export class ShareCollectionModalComponent implements OnDestroy{
   isLoading = false;
   editForm:FormGroup
   constructor(private collectionService:CollectionService,private fb:FormBuilder,@Inject(DOCUMENT) private document: Document){
@@ -25,6 +26,8 @@ export class ShareCollectionModalComponent {
   publicLink:string='';
   @Output() closed = new EventEmitter<void>();
   @Output()collectionAdded= new EventEmitter<any>();
+    private destroy$ = new Subject<void>();
+    subscription:any;
   closeModal(): void {
     this.isVisible = false;
     this.closed.emit();
@@ -32,7 +35,7 @@ export class ShareCollectionModalComponent {
   openModal(activeItemId:any): void {
     this.isVisible = true;
     this.id=activeItemId;
-    this.collectionService.getCollectionById(this.id).subscribe({
+    this.subscription=this.collectionService.getCollectionById(this.id).pipe(takeUntil(this.destroy$)).subscribe({
       next: (response: any) => {
  
         this.collectionDetails=response;
@@ -59,5 +62,13 @@ export class ShareCollectionModalComponent {
         this.collectionDetails.isPublic=this.editForm.value.isPublic;
       }
     })
+  }
+  ngOnDestroy(): void {
+    if(this.subscription){
+      this.subscription.unsubscribe();
+      this.destroy$.next();
+      this.destroy$.complete();
+      
+    }
   }
 }

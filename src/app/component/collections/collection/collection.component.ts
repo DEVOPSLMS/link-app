@@ -170,7 +170,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
       this.destroy$.next();
       this.destroy$.complete();
-      console.log('destroyed');
     }
   }
   @HostListener('document:click', ['$event'])
