@@ -15,4 +15,7 @@ export interface deleteCollection{
 export interface editCollection{
     collectionName:string;
 }
+export interface editCollectionPublic{
+    isPublic:boolean;
+}
 

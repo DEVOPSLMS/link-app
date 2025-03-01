@@ -43,7 +43,7 @@
   
   
   .card{
-    height:9rem;
+    height: max-content;
     margin-top:5%;
     width:100%;
     border:0.1px solid lightgray;
@@ -55,11 +55,13 @@
     box-shadow: 0 0 0.2rem 0 rgba(75, 75, 75, 0.295);
 }
 .card .card-header{
-
+    display:flex;
+    flex-direction: row;
     padding: 0.5rem;
     border-bottom: 0.1px solid lightgray;
 }
 .card .card-header .button-group{
+ 
     width:fit-content;
     padding: 0.4rem;
     background-color: rgba(211, 211, 211, 0.356);
@@ -69,7 +71,71 @@
     -ms-border-radius: 1rem;
     -o-border-radius: 1rem;
 }
+.switch {
+    margin-top:1rem;
+    margin-left:auto;
+    position: relative;
+    display: inline-block;
+    width: 2.6rem;
+    height: 1.5rem;
+  }
+  
+  .switch form .checkbox { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    left:0.2rem;
+    position: absolute;
+    content: "";
+    height: 1.2rem;
+    top:0.2rem;
+    width: 1.4rem;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .checkbox:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  .checkbox:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  .checkbox:checked + .slider:before {
+    transform: translateX(0.9rem);
+    -moz-transform: translateX(0.9rem);
+    -o-transform: translateX(0.9rem);
+    -webkit-transform: translateX(0.9rem);
+    -ms-transform: translateX(0.9rem);
+}
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 .card .card-header .share{
+    transition: .4s;
     margin:0.1rem;
     padding:0.5rem;
     border-radius: 1rem;
@@ -114,3 +180,35 @@
     margin:1rem 1rem 0 0;
     height:fit-content;
 }
+.card-body .public-content{
+    margin:1rem;
+}
+.card-body .showLink{
+
+    display:flex;
+    flex-direction: row;
+}
+.card-body .public-content .link{
+    width:90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: rgba(211, 211, 211, 0.418);
+    padding:0.5rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+
+}
+.card-body .public-content button{
+    background-color: rgba(211, 211, 211, 0.418);
+    color:black;
+    padding:0.5rem !important;
+    border-radius: 1rem;
+    margin-top:2rem;
+    margin-left:1rem;
+    height:fit-content;
+}
+
