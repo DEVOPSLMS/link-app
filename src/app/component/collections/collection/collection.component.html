@@ -182,6 +182,11 @@
                         </div>
                       </ng-template>
                     </div>
+                    <div class="tags"*ngIf="link.tags && link.tags.trim() !== ''">
+                      <span *ngFor="let tag of link.tags.split(',')" class="tag">
+                        {{ tag }}
+                      </span>
+                    </div>
                     <div
                     class="description"
                     *ngIf="link.description && link.description.trim() !== ''"

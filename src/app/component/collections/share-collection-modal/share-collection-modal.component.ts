@@ -24,6 +24,7 @@ export class ShareCollectionModalComponent implements OnDestroy{
   collectionDetails:any;
   privateLink:string='';
   publicLink:string='';
+
   @Output() closed = new EventEmitter<void>();
   @Output()collectionAdded= new EventEmitter<any>();
     private destroy$ = new Subject<void>();
@@ -46,7 +47,7 @@ export class ShareCollectionModalComponent implements OnDestroy{
         })
         
         const routePath='/share';
-        this.privateLink= `${baseUrl}${routePath}?collectionId=${this.collectionDetails.id}?privateKey=${this.collectionDetails.privateKey}`;
+        this.privateLink= `${baseUrl}${routePath}?collectionId=${this.collectionDetails.id}&privateKey=${this.collectionDetails.privateKey}`;
         console.log(this.editForm.value.isPublic);
         this.publicLink=`${baseUrl}${routePath}?collectionId=${this.collectionDetails.id}`;
       }
@@ -70,5 +71,20 @@ export class ShareCollectionModalComponent implements OnDestroy{
       this.destroy$.complete();
       
     }
+  }
+  generateNewLink(){
+    this.isLoading=true;
+    
+    this.collectionService.updateCollectionPrivate(this.id).subscribe({
+      next:(response:any)=>{
+        setTimeout(()=>{
+          this.isLoading=false;
+          const baseUrl=this.document.location.origin;
+          const routePath='/share';
+          this.privateLink= `${baseUrl}${routePath}?collectionId=${this.collectionDetails.id}&privateKey=${response.privateKey}`;
+        },2000);
+        
+      }
+    })
   }
 }
