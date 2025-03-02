@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AuthService } from '../../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,71 +12,73 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: false,
-  
+
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private authService:AuthService,private fb:FormBuilder,private cdr:ChangeDetectorRef,private router:Router){
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
   }
   isVisible = false;
   password: string = '';
   showPassword: boolean = false;
   isLoading = false;
-  errorMessage:string='';
+  errorMessage: string = '';
 
   ngOnInit(): void {
     this.authService.verifyUser().subscribe({
-      next:(response:any)=>{
-        if(response){
-          this.router.navigateByUrl("/app")
+      next: (response: any) => {
+        if (response) {
+          this.router.navigateByUrl('/app');
         }
-        
-      }
-    })
+      },
+    });
   }
   @Output() closed = new EventEmitter<void>();
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
- 
+
   openModal(): void {
     this.isVisible = true;
-    
   }
 
   closeModal(): void {
     this.isVisible = false;
     this.closed.emit();
   }
-  login(){
-    if(this.loginForm.valid){
+  login() {
+    if (this.loginForm.valid) {
       this.isLoading = true;
       this.authService.login(this.loginForm.value).subscribe({
-        next:(response)=>{
-         
+        next: (response) => {
           setTimeout(() => {
             this.isLoading = false;
             this.closeModal();
             this.loginForm.reset();
-            this.errorMessage='';
+            this.errorMessage = '';
             this.router.navigate(['/app']);
           }, 2000);
         },
-        error:(error)=>{
+        error: (error) => {
           console.log(error);
-         
+
           setTimeout(() => {
             this.isLoading = false;
-            this.errorMessage=error.message;
+            this.errorMessage = error.message;
           }, 2000);
-        }
-      })
+        },
+      });
     }
   }
 }

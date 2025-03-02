@@ -21,34 +21,47 @@
             >
               <span class="material-symbols-outlined"> cloud_lock </span>Private
             </button>
-            
           </div>
-          <label class="switch"*ngIf="activeButton === 'button1'">
+          <label class="switch" *ngIf="activeButton === 'button1'">
             <form [formGroup]="editForm">
-            <input type="checkbox"class="checkbox" formControlName="isPublic"(change)="updateCollectionPublic()">
+              <input
+                type="checkbox"
+                class="checkbox"
+                formControlName="isPublic"
+                (change)="updateCollectionPublic()"
+              />
 
-
-            <span class="slider round"></span>
-        </form>
+              <span class="slider round"></span>
+            </form>
           </label>
+          <button
+            *ngIf="activeButton === 'button2'"
+            (click)="generateNewLink()"
+            class="newLink"[disabled]="isLoading"
+          >
+            <span *ngIf="!isLoading">Generate New Link</span><div *ngIf="isLoading" class="spinner"></div>
+          </button>
         </div>
 
         <div class="card-body">
-            <div class="public-content"*ngIf="activeButton === 'button1'">
-                <p>Make collection public.<br> Collections that are public can be seen by other users by checking your profile. </p>
-                <div class="showLink"*ngIf="collectionDetails.isPublic">
-                    <p class="link">
-                        {{ publicLink }}
-                      </p>
-                      <button
-                        [cdkCopyToClipboard]="publicLink"
-                        (click)="showPopUp.showPopup()"
-                      >
-                        <span class="material-symbols-outlined copy">content_copy</span>
-                      </button>
-                </div>
-
+          <div class="public-content" *ngIf="activeButton === 'button1'">
+            <p>
+              Make collection public.<br />
+              Collections that are public can be seen by other users by checking
+              your profile.
+            </p>
+            <div class="showLink" *ngIf="collectionDetails.isPublic">
+              <p class="link">
+                {{ publicLink }}
+              </p>
+              <button
+                [cdkCopyToClipboard]="publicLink"
+                (click)="showPopUp.showPopup()"
+              >
+                <span class="material-symbols-outlined copy">content_copy</span>
+              </button>
             </div>
+          </div>
           <div class="content" *ngIf="activeButton === 'button2'">
             <p class="link">
               {{ privateLink }}
@@ -59,6 +72,7 @@
             >
               <span class="material-symbols-outlined copy">content_copy</span>
             </button>
+            <br />
           </div>
         </div>
       </div>

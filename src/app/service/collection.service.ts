@@ -5,7 +5,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, EMPTY, Observable, tap } from 'rxjs';
+import { catchError, EMPTY, Observable, tap, throwError } from 'rxjs';
 import {
   CollectionModel,
   CollectionResponse,
@@ -33,15 +33,49 @@ export class CollectionService {
       );
   }
   getCollectionById(id: string) {
-    const params =new HttpParams().set('id',id)
+    const params = new HttpParams().set('id', id);
     return this.http
-      .get(this.apiUrl + '/link/collection-by-id' , {params,
+      .get(this.apiUrl + '/link/collection-by-id', {
+        params,
         withCredentials: true,
       })
       .pipe(
         catchError((error) => EMPTY),
 
         tap((response: any) => {})
+      );
+  }
+  getCollectionPrivate(privateKey: string) {
+    const params = new HttpParams().set('privateKeyId', privateKey);
+    return this.http
+      .get(this.apiUrl + '/link/collection-private', {
+        params,
+        withCredentials: true,
+      })
+      .pipe(
+        catchError((error) => EMPTY),
+
+        tap((response: any) => {})
+      );
+  }
+  updateCollectionPrivate(id: string): Observable<CollectionResponse> {
+    return this.http
+      .put<CollectionResponse>(this.apiUrl + '/link/update-collection-private/' + id, {}, {
+        withCredentials: true,
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            console.error('Unauthorized request:', error);
+            // Handle unauthorized error (e.g., redirect to login page)
+          } else {
+            console.error('Error updating collection to private:', error);
+          }
+          return throwError(() => error);
+        }),
+        tap((response: any) => {
+          console.log(response);
+        })
       );
   }
   addCollection(collectionName: string): Observable<CollectionResponse> {

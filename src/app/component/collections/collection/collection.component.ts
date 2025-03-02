@@ -57,7 +57,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   observer:any;
   safeHtml: SafeHtml;
-
   constructor(
     private sanitizer: DomSanitizer,
     private collectionService: CollectionService,

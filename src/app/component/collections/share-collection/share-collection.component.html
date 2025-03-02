@@ -1,1 +1,35 @@
-<p>share-collection works!</p>
+<body>
+    <div class="container"*ngIf="collectionDetails">
+        <div class="top-layout">
+            <p>{{collectionDetails.collectionName}}</p>
+        </div>
+        <div class="middle-layout">
+            <cdk-virtual-scroll-viewport itemSize="collectionDetails.link.length" class="link-viewport">
+                <div class="left-card">
+                    <div class="card"*ngFor="let link of collectionDetails.links"[ngClass]="{ active: linkId == link.id }">
+                        <div class="card-details"(click)="click(link.id)" >
+                            <img [src]="link.previewImageUrl"error="hideImage($event)" alt=""loading="lazy">
+                            <div class="card-links">
+                                <p>{{link.previewTitle}}</p>
+                                <a href="{{link.url}}"target="_blank" class="material-symbols-outlined">open_in_new</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </cdk-virtual-scroll-viewport>
+            
+       
+            <div class="right-card"*ngIf="userClicked">
+                <div class="card">
+                    <div class="details">
+                        <img [src]="currentLink.previewImageUrl" error="hideImage($event)"alt=""loading="lazy">
+                        <a href="{{currentLink.url}}"target="_blank">{{currentLink.previewTitle}}<span class="material-symbols-outlined">open_in_new</span></a>
+                        <p *ngIf="currentLink.description && currentLink.description.trim() !== '' ">{{currentLink.description}}</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>

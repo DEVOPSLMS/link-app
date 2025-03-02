@@ -333,6 +333,22 @@ body {
 .description {
   text-overflow: ellipsis;  
 }
+.tags{
+  display:flex;
+  flex-wrap: wrap;
+  gap:0.2rem;
+
+}
+.tag{
+  padding:0.3rem;
+  background-color: lightgray;
+  margin:0.3rem;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+}
 .link-container .card .card-bottom {
   width: 100%;
   display: flex;

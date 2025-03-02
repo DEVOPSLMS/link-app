@@ -8,6 +8,7 @@ export interface CollectionResponse{
     links:[];
     created:Date;
     isPublic:boolean;
+    privateKey:string;
 }
 export interface deleteCollection{
     id:string;

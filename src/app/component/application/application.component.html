@@ -26,8 +26,8 @@
                                     list_alt
                                     </span>{{searchControl.value}}</a>
                             </li>
-                            <li *ngFor="let search of searchDetails">
-                                <a *ngIf="searchDetails.length > 0"[routerLink]="['/app']"[queryParams]="{ collection: true, collectionId: search.id }"><span class="material-symbols-outlined link">
+                            <li *ngFor="let search of searchDetails"[routerLink]="['/app']"[queryParams]="{ collection: true, collectionId: search.id }">
+                                <a *ngIf="searchDetails.length > 0"><span class="material-symbols-outlined link">
                                     list_alt
                                     </span>{{search.collectionName}}</a>
                             </li>
