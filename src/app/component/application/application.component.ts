@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { CollectionService } from '../../service/collection.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-application',
@@ -21,8 +22,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   constructor(
     private collectionService: CollectionService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService:AuthService
   ) {}
+
   userClicked = false;
   private searchSubscription: Subscription;
   searchControl: FormControl = new FormControl();
@@ -44,6 +47,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     // Replace with your service API call
     this.collectionService.searchCollection(query).subscribe((results) => {
       this.searchDetails=results;
+      console.log(this.searchDetails)
     });
   }
   click() {
@@ -64,5 +68,9 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
+  }
+   logout(){
+    this.authService.logout();
+    
   }
 }

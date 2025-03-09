@@ -153,7 +153,7 @@ export class CollectionService {
       )
       .pipe(
         tap((response: any) => {
-          console.log(response);
+          
         })
       );
   }

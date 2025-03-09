@@ -11,7 +11,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CollectionService } from '../../../service/collection.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragEnd,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArrayDataSource } from '@angular/cdk/collections';
@@ -55,12 +59,15 @@ export class CollectionComponent implements OnInit, OnDestroy {
   collectionId: string = '';
   private subscription: Subscription;
   private destroy$ = new Subject<void>();
-  observer:any;
+  observer: any;
   safeHtml: SafeHtml;
+
   constructor(
     private sanitizer: DomSanitizer,
     private collectionService: CollectionService,
-    private route: ActivatedRoute,private el:ElementRef,private renderer: Renderer2
+    private route: ActivatedRoute,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     this.addCollectionForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -81,6 +88,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   loadCollections() {
     this.subscription = this.collectionService
       .getCollection()
@@ -295,6 +303,4 @@ export class CollectionComponent implements OnInit, OnDestroy {
     const img = event.target as HTMLImageElement;
     img.hidden = true;
   }
-
- }
-
+}

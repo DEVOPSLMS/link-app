@@ -12,6 +12,7 @@ import { LoginComponent } from './component/auth/login/login.component';
 import { ShareCollectionComponent } from './component/collections/share-collection/share-collection.component';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginGuard } from './guard/login.guard';
+import { ProfileComponent } from './component/profile/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: ApplicationComponent,
       },
-
+      {
+        path: 'user/profile',
+        canActivate: [AuthGuard],
+        component: ProfileComponent,
+      },
       {
         path: '',
         redirectTo: 'app',

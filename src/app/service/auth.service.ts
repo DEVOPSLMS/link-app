@@ -93,6 +93,20 @@ export class AuthService {
         })
       );
   }
+  getProfile():Observable<LoginResponse>{
+    return this.http
+    .post(
+      this.apiUrl + '/current-user',
+      { },
+      { withCredentials: true }
+    )
+    .pipe(
+      catchError((error) => EMPTY),
+
+      tap((response: any) => {
+      })
+    );
+  }
   login(credentials: LoginModel): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(this.apiUrl + '/login', credentials, {
@@ -100,11 +114,13 @@ export class AuthService {
       })
       .pipe(
         catchError((error: HttpErrorResponse) => {
+          console.log(error)
+          console.log(error.status)
           let errorMessage = 'An unknown error occurred.';
           if (error.status === 0) {
             errorMessage = 'Email not verified';
             setTimeout(() => {
-              this.router.navigateByUrl('verify-email');
+              this.router.navigateByUrl('auth/verify-email');
             }, 2000);
           } else if (
             error.status === 500 &&
@@ -148,13 +164,20 @@ export class AuthService {
 
   logout() {
     this.isLoggedinSubject.next(false);
-    this.router.navigateByUrl('auth/login');
     this.userLogout().subscribe({});
   }
   userLogout() {
     return this.http
       .post(this.apiUrl + '/logout', {}, { withCredentials: true })
-      .pipe(catchError((error) => EMPTY));
+      .pipe(
+        catchError((error:HttpErrorResponse) =>{
+          this.router.navigateByUrl('auth/login');
+          return EMPTY;
+        } ),
+        tap((response: any) => {
+          this.router.navigateByUrl('auth/login');
+        })
+      );
   }
   resendEmail(email: string) {
     return this.http.post(this.apiUrl + '/Send-Email', { email }).pipe(
@@ -162,7 +185,7 @@ export class AuthService {
       tap((response: any) => {})
     );
   }
-  verifyUser() :Observable<boolean>{
+  verifyUser(): Observable<boolean> {
     return this.http
       .post(
         this.apiUrl + '/check-user',
@@ -174,4 +197,5 @@ export class AuthService {
         tap((response: any) => {})
       );
   }
+
 }
