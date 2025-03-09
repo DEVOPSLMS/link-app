@@ -103,5 +103,5 @@
 }
 .link-viewport{
     height:80vh;
-
+    overflow-x: auto;
 }

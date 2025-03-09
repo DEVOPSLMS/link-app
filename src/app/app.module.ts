@@ -36,6 +36,7 @@ import { ShareCollectionModalComponent } from './component/collections/share-col
 import { PopUpDialogComponent } from './component/pop-up-dialog/pop-up-dialog.component';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginGuard } from './guard/login.guard';
+import { ProfileComponent } from './component/profile/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { LoginGuard } from './guard/login.guard';
     ShareCollectionComponent,
     ShareCollectionModalComponent,
     PopUpDialogComponent,
+    ProfileComponent,
 
     
   ],

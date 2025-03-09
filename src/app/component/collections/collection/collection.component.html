@@ -1,6 +1,6 @@
 <body>
   <div class="container">
-    <div class="left-container" #leftContainer>
+    <div class="left-container" #leftContainer >
       <div class="icon-list">
         <app-add-collection-modal
           #addCollectionModal
@@ -92,8 +92,11 @@
             </div>
           </div>
         </cdk-virtual-scroll-viewport>
+       
       </div>
+  
     </div>
+
     <div class="right-container" *ngIf="activeItemId != null">
       <div class="top-layout">
         <div class="collection-name">
